@@ -13,5 +13,5 @@
 - Git：https://git-scm.com/
 
 ## 作者
-- 刘浩和自己
+- 刘浩
 
