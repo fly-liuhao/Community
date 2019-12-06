@@ -14,7 +14,7 @@ public class HelloController {
     /**
      * 测试方法
      */
-    @RequestMapping("hello")
+    @RequestMapping("/hello")
     public String hello(String name, Model model){
         System.out.println(name);
         if(name!=null&&name.equals("")){
@@ -23,5 +23,14 @@ public class HelloController {
             model.addAttribute("name","Admin");
         }
         return "hello";
+    }
+
+    /**
+     * 测试index页面
+     */
+    @RequestMapping("/")
+    public String index(){
+        System.out.println("进入index.html页面~~");
+        return "index";
     }
 }
