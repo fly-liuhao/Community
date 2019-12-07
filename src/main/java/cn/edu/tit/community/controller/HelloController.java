@@ -30,7 +30,7 @@ public class HelloController {
      */
     @RequestMapping("/")
     public String index(){
-        System.out.println("进入index.html页面~~");
+//        System.out.println("进入index.html页面~~");
         return "index";
     }
 }
