@@ -14,6 +14,7 @@
 - [github OAuth 授权机制](https://developer.github.com/apps/building-oauth-apps/)：用于授权登录，实现登录功能
 - [OkHttp](https://square.github.io/okhttp/)：用于后端模拟post请求
 - [Maven Repository](https://mvnrepository.com/)：用于使用Maven工程的jar包引入
+- [Spring 官方文档](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-embedded-database-support)
 
 ## 工具
 - [Git](https://git-scm.com/)
