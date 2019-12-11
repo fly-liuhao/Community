@@ -19,4 +19,10 @@ public class UserServiceImpl implements UserService {
         boolean result = mysql_affected_rows != 0 ? true : false;
         return result;
     }
+
+    @Override
+    public User findUserByToken(String token) {
+
+        return userMapper.selectUserByToken(token);
+    }
 }

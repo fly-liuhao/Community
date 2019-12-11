@@ -14,4 +14,12 @@ public interface UserService {
      * @return 成功返回true，失败返回false
      */
     public boolean addUser(User user);
+
+    /**
+     * 根据token查询用户
+     *
+     * @param token 登录时UUID生成记录的标记
+     * @return 查询到的用户对象
+     */
+    User findUserByToken(String token);
 }

@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 /**
@@ -42,7 +40,7 @@ public class AuthorizeController {
 
     //    @RequestMapping("/callback")
     @GetMapping("/callback")
-    public String callback(String code, String state, HttpServletRequest request, HttpServletResponse response) {
+    public String callback(String code, String state, HttpServletResponse response) {
 
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
@@ -56,20 +54,18 @@ public class AuthorizeController {
         if (githubUser != null) {
             // 将用户信息持久化到数据库当中
             User user = new User();
-            user.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
+            user.setBio(githubUser.getBio());
             System.out.println(user);
             userService.addUser(user);
 
-            // 登录成功， 写 cookie 和 session
-            HttpSession session = request.getSession();
-            session.setAttribute("user", githubUser);
-            // 创建两个cookie，分别用于存放用户名以及密码
-            Cookie cookie = new Cookie("userName", githubUser.getName());
-            cookie.setMaxAge(60);// 设置Cookie有效期为10天
+            // 登录成功， 写 cookie
+            Cookie cookie = new Cookie("token", token);
             // 向响应中添加Cookie
             response.addCookie(cookie);
             return "redirect:/";
