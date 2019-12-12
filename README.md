@@ -19,6 +19,7 @@
 - [Maven Repository](https://mvnrepository.com/)：用于使用Maven工程的jar包引入
 - [Spring Boot & MyBatis](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)：Spring Boot项目使用MyBatis框架
 - [Spring Boot 参考指南](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-embedded-database-support)：查找内嵌的数据源
+- [FlyWay 使用教程](https://flywaydb.org/getstarted/firststeps/maven#migrating-the-database)：用于多人共同使用数据库，持续的更新集成我们的脚本，使得数据库的维护成本降低
 
 #### 工具
 - [Git](https://git-scm.com/)
