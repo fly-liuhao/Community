@@ -5,6 +5,7 @@ import cn.edu.tit.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
@@ -24,7 +25,7 @@ public class HelloController {
     /**
      * 测试方法
      */
-    @RequestMapping("/hello")
+    @GetMapping("/hello")
     public String hello(String name, Model model) {
         System.out.println(name);
         if (name != null && name.equals("")) {
@@ -38,7 +39,7 @@ public class HelloController {
     /**
      * index页面
      */
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -53,5 +54,13 @@ public class HelloController {
             }
         }
         return "index";
+    }
+
+    /**
+     * 错误页面
+     */
+    @GetMapping(value = "/error")
+    public String error(){
+        return "error";
     }
 }

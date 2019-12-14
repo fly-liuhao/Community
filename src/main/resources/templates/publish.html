@@ -53,22 +53,29 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-md-9 col-md-12 col-sm-12 col-xs-12">
-            <h2><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>发起</h2>
+            <h2><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> 发起</h2>
             <hr/>
-            <form action="">
+            <form action="/publish" method="post">
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）:</label>
-                    <input type="text" id="title" name="title" class="form-control" placeholder="问题标题...">
+                    <input type="text" id="title" name="title" class="form-control" placeholder="问题标题..." th:value="${title}">
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充 (必填，请参照右侧提示):</label>
-                    <textarea id="description" name="description" class="form-control" cols="30" rows="10"></textarea>
+                    <textarea id="description" name="description" class="form-control" cols="30" rows="10" th:text="${description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签:</label>
-                    <input type="text" id="tag" name="tag" class="form-control" placeholder="输入标签（以逗号分隔）...">
+                    <input type="text" id="tag" name="tag" class="form-control" placeholder="输入标签（以逗号分隔）..." th:value="${tag}">
                 </div>
-                <button type="submit" class="btn btn-success btn-publish">确认发起</button>
+                <div class="container-fluid main">
+                    <div class="row">
+                        <div class="alert alert-danger col-md-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}" th:if="${error != null}"></div>
+                        <div class="col-md-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="submit" class="btn btn-success btn-publish">确认发起</button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="col-md-3 col-md-12 col-sm-12 col-xs-12">
