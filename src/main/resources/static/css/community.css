@@ -12,3 +12,13 @@ body {
     float: right;
     margin-bottom: 30px;
 }
+
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+}
+
+.media-object{
+    width: 40px;
+}

@@ -22,7 +22,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByToken(String token) {
-
         return userMapper.selectUserByToken(token);
+    }
+
+    @Override
+    public User findUserById(Long id) {
+        User user = userMapper.selectUserByID(id);
+        return user;
     }
 }

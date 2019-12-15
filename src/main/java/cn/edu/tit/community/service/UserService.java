@@ -22,4 +22,12 @@ public interface UserService {
      * @return 查询到的用户对象
      */
     User findUserByToken(String token);
+
+    /**
+     * 根据用户id查询用户
+     *
+     * @param id 用户ID
+     * @return 查询到的用户对象
+     */
+    User findUserById(Long id);
 }

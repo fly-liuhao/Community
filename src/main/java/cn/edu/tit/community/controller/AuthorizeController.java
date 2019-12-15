@@ -36,8 +36,6 @@ public class AuthorizeController {
     @Value("${github.redirect.uri}")
     private String redirectUri;
 
-
-    //    @RequestMapping("/callback")
     @GetMapping("/callback")
     public String callback(String code, String state, HttpServletResponse response) {
 
@@ -63,7 +61,6 @@ public class AuthorizeController {
             user.setAvatarUrl(githubUser.getAvatarUrl());
             System.out.println(user);
             userService.addUser(user);
-
 
             // 登录成功， 写 cookie
             Cookie cookie = new Cookie("token", token);

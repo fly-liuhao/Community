@@ -1,16 +1,19 @@
 package cn.edu.tit.community.controller;
 
+import cn.edu.tit.community.dto.QuestionDTO;
 import cn.edu.tit.community.model.User;
+import cn.edu.tit.community.service.QuestionService;
 import cn.edu.tit.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 测试Controller控制器
@@ -21,6 +24,9 @@ public class HelloController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    QuestionService questionService;
 
     /**
      * 测试方法
@@ -40,7 +46,7 @@ public class HelloController {
      * index页面
      */
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request, Model model) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
@@ -53,6 +59,10 @@ public class HelloController {
                 }
             }
         }
+        List<QuestionDTO> questionList = new ArrayList<QuestionDTO>();
+        questionList = questionService.findAllQuestion();
+        model.addAttribute("questions",questionList);
+
         return "index";
     }
 
