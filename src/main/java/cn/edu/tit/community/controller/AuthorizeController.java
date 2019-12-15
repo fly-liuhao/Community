@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
@@ -61,8 +60,10 @@ public class AuthorizeController {
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
             user.setBio(githubUser.getBio());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             System.out.println(user);
             userService.addUser(user);
+
 
             // 登录成功， 写 cookie
             Cookie cookie = new Cookie("token", token);

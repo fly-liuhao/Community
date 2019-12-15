@@ -11,7 +11,7 @@ package cn.edu.tit.community.mapper;
 @Repository
 public interface UserMapper {
 
-    @Insert("insert into user(name,token,account_id,gmt_create,gmt_modify,bio) values(#{name},#{token},#{accountId},#{gmtCreate},#{gmtModify},#{bio})")
+    @Insert("insert into user(name,token,account_id,gmt_create,gmt_modify,bio,avatar_url) values(#{name},#{token},#{accountId},#{gmtCreate},#{gmtModify},#{bio},#{avatarUrl})")
     public int insertUer(User user);
 
     @Select("select * from user where token=#{token}")
