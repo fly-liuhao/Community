@@ -50,9 +50,9 @@ public class HelloController {
         Cookie[] cookies = request.getCookies();
         if (cookies != null && cookies.length != 0) {
             for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("token")){
+                if (cookie.getName().equals("token")) {
                     User user = userService.findUserByToken(cookie.getValue());
-                    if(user != null){
+                    if (user != null) {
                         HttpSession session = request.getSession();
                         session.setAttribute("user", user);
                     }
@@ -61,7 +61,10 @@ public class HelloController {
         }
         List<QuestionDTO> questionList = new ArrayList<QuestionDTO>();
         questionList = questionService.findAllQuestion();
-        model.addAttribute("questions",questionList);
+        for (QuestionDTO q : questionList) {
+            q.setDescription("hello Jack");
+        }
+        model.addAttribute("questions", questionList);
 
         return "index";
     }
@@ -70,7 +73,7 @@ public class HelloController {
      * 错误页面
      */
     @GetMapping(value = "/error")
-    public String error(){
+    public String error() {
         return "error";
     }
 }
