@@ -1,7 +1,7 @@
 package cn.edu.tit.community.controller;
 
 import cn.edu.tit.community.dto.AccessTokenDTO;
-import cn.edu.tit.community.dto.GithubUser;
+import cn.edu.tit.community.dto.GithubUserDTO;
 import cn.edu.tit.community.model.User;
 import cn.edu.tit.community.provider.GithubProvider;
 import cn.edu.tit.community.service.UserService;
@@ -47,18 +47,18 @@ public class AuthorizeController {
         accessTokenDTO.setCode(code);
 
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        GithubUser githubUser = githubProvider.getGithubUserInfo(accessToken);
-        if (githubUser != null) {
+        GithubUserDTO githubUserDTO = githubProvider.getGithubUserInfo(accessToken);
+        if (githubUserDTO != null) {
             // 将用户信息持久化到数据库当中
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
-            user.setName(githubUser.getName());
-            user.setAccountId(String.valueOf(githubUser.getId()));
+            user.setName(githubUserDTO.getName());
+            user.setAccountId(String.valueOf(githubUserDTO.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
-            user.setBio(githubUser.getBio());
-            user.setAvatarUrl(githubUser.getAvatarUrl());
+            user.setBio(githubUserDTO.getBio());
+            user.setAvatarUrl(githubUserDTO.getAvatarUrl());
             System.out.println(user);
             userService.addUser(user);
 
