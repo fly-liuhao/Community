@@ -2,7 +2,7 @@ package cn.edu.tit.community.provider;
 
 
 import cn.edu.tit.community.dto.AccessTokenDTO;
-import cn.edu.tit.community.dto.GithubUser;
+import cn.edu.tit.community.dto.GithubUserDTO;
 
 import com.alibaba.fastjson.JSON;
 import okhttp3.*;
@@ -31,7 +31,7 @@ public class GithubProvider {
         return null;
     }
 
-    public GithubUser getGithubUserInfo(String accessToken) {
+    public GithubUserDTO getGithubUserInfo(String accessToken) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://api.github.com/user?access_token=" + accessToken)
@@ -40,8 +40,8 @@ public class GithubProvider {
         try {
             Response response = client.newCall(request).execute();
             String responseStr = response.body().string();
-            GithubUser githubUser = JSON.parseObject(responseStr, GithubUser.class);
-            return githubUser;
+            GithubUserDTO githubUserDTO = JSON.parseObject(responseStr, GithubUserDTO.class);
+            return githubUserDTO;
         } catch (IOException e) {
             e.printStackTrace();
         }
