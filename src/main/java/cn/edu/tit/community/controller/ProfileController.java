@@ -4,7 +4,6 @@ import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
 import cn.edu.tit.community.model.User;
 import cn.edu.tit.community.service.QuestionService;
-import cn.edu.tit.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,32 +19,16 @@ import java.util.List;
 public class ProfileController {
 
     @Autowired
-    UserService userService;
-    @Autowired
     QuestionService questionService;
 
     @GetMapping("/profile/{action}")
-    public String showMyQuestion(@PathVariable(name = "action") String action,
-                                 HttpServletRequest request, Model model,
+    public String showMyQuestion(HttpServletRequest request, Model model,
+                                 @PathVariable(name = "action") String action,
                                  @RequestParam(name = "currPage", defaultValue = "1") Integer currPage,
                                  @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize) {
         if("questions".equals(action)){
-            User user = null;
 
-            // 获取Cookie，如果找到key为token的cookie，该该token对应的用户添加到Session中，是的服务器重启时用户免登录
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null && cookies.length != 0) {
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("token")) {
-                        user = userService.findUserByToken(cookie.getValue());
-                        if (user != null) {
-                            HttpSession session = request.getSession();
-                            session.setAttribute("user", user);
-                            break;
-                        }
-                    }
-                }
-            }
+            User user = (User)request.getSession().getAttribute("user");
             if(user == null) {
                 return "redirect:/";
             }

@@ -2,7 +2,6 @@ package cn.edu.tit.community.controller;
 
 import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
-import cn.edu.tit.community.model.User;
 import cn.edu.tit.community.service.QuestionService;
 import cn.edu.tit.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,24 +43,9 @@ public class IndexController {
      * index页面
      */
     @GetMapping("/")
-    public String index(HttpServletRequest request, Model model,
+    public String index(Model model,
                         @RequestParam(name = "currPage", defaultValue = "1") Integer currPage,
                         @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize) {
-
-        // 获取Cookie，如果找到key为token的cookie，该该token对应的用户添加到Session中，是的服务器重启时用户免登录
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    User user = userService.findUserByToken(cookie.getValue());
-                    if (user != null) {
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user", user);
-                        break;
-                    }
-                }
-            }
-        }
 
         // 处理分页数据
         int totalCount = questionService.findQuestionCount();
