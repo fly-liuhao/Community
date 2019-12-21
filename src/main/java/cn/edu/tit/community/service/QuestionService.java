@@ -17,6 +17,13 @@ public interface QuestionService {
     public boolean addQuestion(Question question);
 
     /**
+     * 查询数据库中记录的问题总数
+     *
+     * @return 数据库中记录的问题总个数
+     */
+    public int findQuestionCount();
+
+    /**
      * 分页查询问题
      *
      * @param offset   分页的起始索引
@@ -26,13 +33,6 @@ public interface QuestionService {
     List<QuestionDTO> findQuestion(int offset, int pageSize);
 
     /**
-     * 查询数据库中记录的问题总数
-     *
-     * @return 数据库中记录的问题总个数
-     */
-    public int findQuestionCount();
-
-    /**
      * 用于获得前端分页使用的信息
      *
      * @param currPage 当前页码
@@ -40,4 +40,22 @@ public interface QuestionService {
      * @return 获取到的分页信息
      */
     PageInfoDTO getPageInfo(int currPage, int pageSize);
+
+    /**
+     * 查询数据库指定ID用户发布的问题总数
+     *
+     * @param id 用户ID
+     * @return 该用户发布的问题总个数
+     */
+    int findQuestionCountByID(int id);
+
+    /**
+     * 分页查询问题
+     *
+     * @param offset   分页的起始索引
+     * @param pageSize 分页时每页个数
+     * @param id 用户ID
+     * @return 查询到的某用户发布的问题集合
+     */
+    List<QuestionDTO> findQuestionByID(int offset, Integer pageSize, int id);
 }

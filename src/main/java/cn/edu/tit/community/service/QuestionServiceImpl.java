@@ -58,4 +58,25 @@ public class QuestionServiceImpl implements QuestionService {
         return pageInfoDTO;
     }
 
+    @Override
+    public int findQuestionCountByID(int id) {
+        return questionMapper.selectQuestionCountByID(id);
+    }
+
+    @Override
+    public List<QuestionDTO> findQuestionByID(int offset, Integer pageSize, int id) {
+        // 获取分页后的问题集合
+        List<Question> questionList = questionMapper.selectQuestionByID(offset, pageSize,id);
+        // 用于传输时的问题集合（补充了创建问题的用户信息）
+        List<QuestionDTO> questionDtoList = new ArrayList<QuestionDTO>();
+        for (Question question : questionList) {
+            QuestionDTO questionDTO = new QuestionDTO();
+            // 将两个对象中相同字段的属性值自动拷贝到另一个实体对象中去
+            BeanUtils.copyProperties(question, questionDTO);
+            User user = userService.findUserById(question.getCreator());
+            questionDTO.setUser(user);
+            questionDtoList.add(questionDTO);
+        }
+        return questionDtoList;
+    }
 }

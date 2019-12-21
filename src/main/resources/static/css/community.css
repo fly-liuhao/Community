@@ -22,3 +22,7 @@ body {
 .media-object{
     width: 40px;
 }
+
+.profile .section {
+    margin-top: 15px;
+}

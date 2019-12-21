@@ -60,6 +60,7 @@ public class IndexController {
                     if (user != null) {
                         HttpSession session = request.getSession();
                         session.setAttribute("user", user);
+                        break;
                     }
                 }
             }
@@ -71,7 +72,7 @@ public class IndexController {
         if (currPage < 1) {
             currPage = 1;
         }
-        if (currPage > totalPage) {
+        if (currPage > totalPage && totalPage != 0) {
             currPage = totalPage;
         }
         int offset = pageSize * (currPage - 1);

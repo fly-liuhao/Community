@@ -13,5 +13,5 @@ public class Question {
     private Integer likeCount = 0;
     private Long gmtCreate;
     private Long gmtModify;
-    private Long creator;
+    private int creator;
 }
