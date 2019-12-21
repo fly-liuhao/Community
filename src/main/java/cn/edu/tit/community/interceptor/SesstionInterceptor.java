@@ -1,7 +1,6 @@
 package cn.edu.tit.community.interceptor;
 
 import cn.edu.tit.community.model.User;
-import cn.edu.tit.community.service.QuestionService;
 import cn.edu.tit.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
