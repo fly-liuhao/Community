@@ -1,11 +1,11 @@
 package cn.edu.tit.community.mapper;
 
-        import cn.edu.tit.community.model.User;
-        import org.apache.ibatis.annotations.Insert;
-        import org.apache.ibatis.annotations.Mapper;
-        import org.apache.ibatis.annotations.Param;
-        import org.apache.ibatis.annotations.Select;
-        import org.springframework.stereotype.Repository;
+import cn.edu.tit.community.model.User;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Repository;
 
 
 @Mapper
@@ -20,4 +20,10 @@ public interface UserMapper {
 
     @Select("select * from user where id=#{id}")
     User selectUserByID(@Param("id") int id);
+
+    @Select("select * from user where account_id=#{accountId}")
+    User selectUSerByAccountID(@Param("accountId") String accountId);
+
+    @Select("update user set name=#{name}, token=#{token}, gmt_modify=#{gmtModify}, bio=#{bio}, avatar_url=#{avatarUrl} where id=#{id}")
+    void updateUser(User user);
 }

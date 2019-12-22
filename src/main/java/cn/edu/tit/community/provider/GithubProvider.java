@@ -12,6 +12,13 @@ import java.io.IOException;
 
 @Component
 public class GithubProvider {
+
+    /**
+     * 获取用户的accessToken（用于后面获取github用户信息）
+     *
+     * @param accessTokenDTO 自定义封装的一些请求相关参数
+     * @return String 类型的accessToken
+     */
     public String getAccessToken(AccessTokenDTO accessTokenDTO) {
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
@@ -31,6 +38,12 @@ public class GithubProvider {
         return null;
     }
 
+    /**
+     * 根据用户的access Token获取geihub用户信息
+     *
+     * @param accessToken 获取到的accessToken
+     * @return 自定的Github用户对象
+     */
     public GithubUserDTO getGithubUserInfo(String accessToken) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -40,6 +53,7 @@ public class GithubProvider {
         try {
             Response response = client.newCall(request).execute();
             String responseStr = response.body().string();
+            // 通过fastJson将从网页获取到的用户信息，转化为用户的实体类
             GithubUserDTO githubUserDTO = JSON.parseObject(responseStr, GithubUserDTO.class);
             return githubUserDTO;
         } catch (IOException e) {

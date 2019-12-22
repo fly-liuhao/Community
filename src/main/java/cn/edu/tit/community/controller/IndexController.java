@@ -21,23 +21,7 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    UserService userService;
-    @Autowired
     QuestionService questionService;
-
-    /**
-     * 测试方法
-     */
-    @GetMapping("/hello")
-    public String hello(String name, Model model) {
-        System.out.println(name);
-        if (name != null && name.equals("")) {
-            model.addAttribute("name", name);
-        } else {
-            model.addAttribute("name", "Admin");
-        }
-        return "hello";
-    }
 
     /**
      * index页面

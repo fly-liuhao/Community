@@ -30,4 +30,12 @@ public interface UserService {
      * @return 查询到的用户对象
      */
     User findUserById(int id);
+
+    /**
+     * 用户存在更新用户，不存在则创建用户
+     *
+     * @param user 登录时获取到的用户信息
+     */
+
+    void createOrUpdate(User user);
 }

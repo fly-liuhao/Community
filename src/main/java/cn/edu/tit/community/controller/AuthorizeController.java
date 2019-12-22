@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -22,8 +21,7 @@ import java.util.UUID;
 @Controller
 public class AuthorizeController {
 
-    //    @Autowired
-    @Resource
+    @Autowired
     private GithubProvider githubProvider;
 
     @Autowired
@@ -59,8 +57,9 @@ public class AuthorizeController {
             user.setGmtModify(user.getGmtCreate());
             user.setBio(githubUserDTO.getBio());
             user.setAvatarUrl(githubUserDTO.getAvatarUrl());
-            System.out.println(user);
-            userService.addUser(user);
+
+            // 数据库添加用户或者更新用户信息
+            userService.createOrUpdate(user);
 
             // 登录成功， 写 cookie
             Cookie cookie = new Cookie("token", token);
