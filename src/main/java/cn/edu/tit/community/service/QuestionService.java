@@ -54,8 +54,22 @@ public interface QuestionService {
      *
      * @param offset   分页的起始索引
      * @param pageSize 分页时每页个数
-     * @param id 用户ID
+     * @param id       用户ID
      * @return 查询到的某用户发布的问题集合
      */
     List<QuestionDTO> findQuestionByID(int offset, Integer pageSize, int id);
+
+    /**
+     * 根据问题的id查询问题
+     *
+     * @param id 问题ID
+     * @return 查询到的问题实体
+     */
+    QuestionDTO getQuestionByID(int id);
+
+    /**
+     * 添加或者修改问题
+     * @param question 传类的问题对象
+     */
+    void addOrModifyQuestion(Question question);
 }

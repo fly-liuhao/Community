@@ -37,5 +37,5 @@ public interface UserService {
      * @param user 登录时获取到的用户信息
      */
 
-    void createOrUpdate(User user);
+    void createOrUpdateUser(User user);
 }

@@ -25,6 +25,12 @@ public interface QuestionMapper {
     @Select("select count(1) from question where creator = #{id}")
     int selectQuestionCountByID(@Param("id") int id);
 
-    @Select("select * from question where creator = #{id} limit #{offset}, #{pageSize}")
-    List<Question> selectQuestionByID(@Param("offset") int offset, @Param("pageSize") int pageSize, @Param("id") int id);
+    @Select("select * from question where creator = #{creator} limit #{offset}, #{pageSize}")
+    List<Question> selectQuestionByCreator(@Param("offset") int offset, @Param("pageSize") int pageSize, @Param("creator") int creator);
+
+    @Select("select * from question where id = #{id}")
+    Question selectQuestionByID(int id);
+
+    @Select("update question set title=#{title}, description=#{description}, tag=#{tag}, gmt_modify=#{gmtModify} where id = #{id}")
+    void updateQuestion(Question question);
 }

@@ -66,7 +66,7 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<QuestionDTO> findQuestionByID(int offset, Integer pageSize, int id) {
         // 获取分页后的问题集合
-        List<Question> questionList = questionMapper.selectQuestionByID(offset, pageSize,id);
+        List<Question> questionList = questionMapper.selectQuestionByCreator(offset, pageSize, id);
         // 用于传输时的问题集合（补充了创建问题的用户信息）
         List<QuestionDTO> questionDtoList = new ArrayList<QuestionDTO>();
         for (Question question : questionList) {
@@ -79,4 +79,27 @@ public class QuestionServiceImpl implements QuestionService {
         }
         return questionDtoList;
     }
+
+    @Override
+    public QuestionDTO getQuestionByID(int id) {
+        Question question = questionMapper.selectQuestionByID(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        User user = userService.findUserById(question.getCreator());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    @Override
+    public void addOrModifyQuestion(Question question) {
+        if(question.getId()==null){
+            // 添加问题
+           questionMapper.insertQuestion(question);
+        } else {
+            // 修改问题
+            question.setGmtModify(System.currentTimeMillis());
+            questionMapper.updateQuestion(question);
+        }
+    }
+
 }

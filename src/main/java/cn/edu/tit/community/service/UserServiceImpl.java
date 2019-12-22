@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createOrUpdate(User user) {
+    public void createOrUpdateUser(User user) {
         User dbUser = userMapper.selectUSerByAccountID(user.getAccountId());
 
         if (dbUser == null) {

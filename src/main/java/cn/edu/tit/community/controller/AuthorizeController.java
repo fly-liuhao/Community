@@ -70,7 +70,7 @@ public class AuthorizeController {
             user.setAvatarUrl(githubUserDTO.getAvatarUrl());
 
             // 数据库添加用户或者更新用户信息
-            userService.createOrUpdate(user);
+            userService.createOrUpdateUser(user);
 
             // 登录成功， 写 cookie
             Cookie cookie = new Cookie("token", token);
