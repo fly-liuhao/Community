@@ -8,6 +8,7 @@ import cn.edu.tit.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
@@ -44,8 +45,18 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
         accessTokenDTO.setCode(code);
 
-        String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        GithubUserDTO githubUserDTO = githubProvider.getGithubUserInfo(accessToken);
+        String accessToken = null;
+        for (int i = 0; i < 10 && accessToken == null; i++) {
+            accessToken = githubProvider.getAccessToken(accessTokenDTO);
+            System.out.println("*-" + i);
+        }
+        GithubUserDTO githubUserDTO = null;
+        if (accessToken != null) {
+            for (int i = 0; i < 10 && githubUserDTO == null; i++) {
+                githubUserDTO = githubProvider.getGithubUserInfo(accessToken);
+                System.out.println("#-" + i);
+            }
+        }
         if (githubUserDTO != null) {
             // 将用户信息持久化到数据库当中
             User user = new User();
@@ -65,10 +76,13 @@ public class AuthorizeController {
             Cookie cookie = new Cookie("token", token);
             // 向响应中添加Cookie
             response.addCookie(cookie);
-            return "redirect:/";
+
         } else {
-            // 登录失败，重新登录
-            return "redirect:/";
+            System.out.println("accessToken: " + accessToken);
+            System.out.println("githubUserDTO: " + githubUserDTO);
+            System.out.println("登录失败！");
         }
+
+        return "redirect:/";
     }
 }
