@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,10 +58,28 @@ public class IndexController {
     }
 
     /**
-     * 错误页面
+     * 出现错误跳转错误页面
      */
     @GetMapping(value = "/error")
     public String error() {
         return "error";
+    }
+
+    /**
+     * 退出登录
+     */
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response) {
+
+        // 清除Session
+        request.getSession().removeAttribute("user");
+        // 清除Cookie
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        // 重定向到首页
+        return "redirect:/";
     }
 }
