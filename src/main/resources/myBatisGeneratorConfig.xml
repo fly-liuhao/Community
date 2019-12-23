@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!-- 本地数据库驱动程序jar包的全路径 -->
+    <classPathEntry location="D:\Software\Maven\repository\com\h2database\h2\1.4.200\h2-1.4.200.jar" />
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 自动产生分页功能接口 -->
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+
+        <!-- 配置数据库链接信息 -->
+        <!-- H2数据库 -->
+        <jdbcConnection driverClass="org.h2.Driver"
+                        connectionURL="jdbc:h2:~/community"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+        <!-- MySQL数据库 -->
+<!--        <jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+<!--                        connectionURL="mysql://localhost:3306/community"-->
+<!--                        userId="root"-->
+<!--                        password="root">-->
+<!--        </jdbcConnection>-->
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 实体类生成的位置 -->
+        <javaModelGenerator targetPackage="cn.edu.tit.community.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- *Mapper.xml 文件的位置 -->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- Mapper 接口文件的位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="cn.edu.tit.community.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!-- 相关表配置 -->
+        <table tableName="user" domainObjectName="User"></table>
+        <table tableName="question" domainObjectName="Question"></table>
+
+    </context>
+</generatorConfiguration>

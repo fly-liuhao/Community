@@ -6,7 +6,6 @@ import cn.edu.tit.community.model.Question;
 
 import java.util.List;
 
-
 public interface QuestionService {
     /**
      * 发布问题
@@ -69,6 +68,7 @@ public interface QuestionService {
 
     /**
      * 添加或者修改问题
+     *
      * @param question 传类的问题对象
      */
     void addOrModifyQuestion(Question question);

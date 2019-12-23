@@ -31,48 +31,53 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
-        <!--Spring Boot 热部署插件-->
+        <!--实现Spring Boot 热部署插件-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
+        <!-- 用于后台模拟用户请求的插件 -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>4.2.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <!-- 用于实体类与Json格式间相互转换 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.62</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <!-- H2数据库，本身只是一个类库，可内嵌到项目中用于单元测试，也可同应用程序打包在一起发布 -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <!-- MySQL数据库 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.47</version>
         </dependency>
+        <!-- MyBatis 持久层ORM框架-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-            <version>2.9.7</version>
-        </dependency>
-        <!--Lombok插件-->
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.module</groupId>-->
+<!--            <artifactId>jackson-module-kotlin</artifactId>-->
+<!--            <version>2.9.7</version>-->
+<!--        </dependency>-->
+        <!--Lombok插件，使用@Data注解，自动生成geter、seter、toString、equals等方法-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -80,7 +85,7 @@
             <scope>provided</scope>
         </dependency>
 
-
+        <!--用于Spring boot单元测试-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -114,6 +119,37 @@
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
                         <version>1.4.200</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <configurationFile>src/main/resources/myBatisGeneratorConfig.xml</configurationFile>
+                    <!--允许移动生成的文件 -->
+                    <verbose>true</verbose>
+                    <!-- 是否覆盖，true表示会替换生成的JAVA文件，false则不覆盖 -->
+                    <overwrite>true</overwrite>
+                </configuration>
+                <dependencies>
+                    <!-- H2数据库驱动 -->
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>1.4.200</version>
+                    </dependency>
+                    <!-- MySQL驱动 -->
+<!--                    <dependency>-->
+<!--                        <groupId>mysql</groupId>-->
+<!--                        <artifactId>mysql-connector-java</artifactId>-->
+<!--                        <version>5.1.47</version>-->
+<!--                    </dependency>-->
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>1.4.0</version>
                     </dependency>
                 </dependencies>
             </plugin>
