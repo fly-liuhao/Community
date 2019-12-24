@@ -17,6 +17,10 @@ public class QuestionController {
     @GetMapping("/question")
     public String question(@RequestParam("id") int id, Model model) {
         QuestionDTO questionDTO = questionService.getQuestionByID(id);
+        if(questionDTO != null){
+            questionService.incViewCount(questionDTO.getId(),1);
+            questionDTO.setViewCount(questionDTO.getViewCount()+1);
+        }
         model.addAttribute("question", questionDTO);
         return "question";
     }

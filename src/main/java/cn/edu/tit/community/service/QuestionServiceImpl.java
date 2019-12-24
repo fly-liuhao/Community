@@ -4,6 +4,7 @@ import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
 import cn.edu.tit.community.exception.CustomizeErrorCode;
 import cn.edu.tit.community.exception.CustomizeException;
+import cn.edu.tit.community.mapper.QuestionExtMapper;
 import cn.edu.tit.community.mapper.QuestionMapper;
 import cn.edu.tit.community.model.Question;
 import cn.edu.tit.community.model.QuestionExample;
@@ -21,6 +22,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     QuestionMapper questionMapper;
+
+    @Autowired
+    QuestionExtMapper questionExtMapper;
 
     @Autowired
     UserService userService;
@@ -125,6 +129,14 @@ public class QuestionServiceImpl implements QuestionService {
             if (updateResult == 0) {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
+        }
+    }
+
+    @Override
+    public void incViewCount(int id, int step) {
+        int updateResult = questionExtMapper.incViewCount(id, step);
+        if (updateResult == 0) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
     }
 

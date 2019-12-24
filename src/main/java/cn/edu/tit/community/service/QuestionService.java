@@ -72,4 +72,12 @@ public interface QuestionService {
      * @param question 传类的问题对象
      */
     void addOrModifyQuestion(Question question);
+
+    /**
+     * 实现阅读数的增加
+     * @param id 问题ID
+     * @param step 步长
+     * @return 数据库影响的行数
+     */
+    void incViewCount(int id, int step);
 }
