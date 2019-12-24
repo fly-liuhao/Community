@@ -46,7 +46,7 @@ public interface QuestionService {
      * @param id 用户ID
      * @return 该用户发布的问题总个数
      */
-    int findQuestionCountByID(int id);
+    int findQuestionCountByCreator(int id);
 
     /**
      * 分页查询问题
@@ -56,7 +56,7 @@ public interface QuestionService {
      * @param id       用户ID
      * @return 查询到的某用户发布的问题集合
      */
-    List<QuestionDTO> findQuestionByID(int offset, Integer pageSize, int id);
+    List<QuestionDTO> findQuestionByCreator(int offset, Integer pageSize, int id);
 
     /**
      * 根据问题的id查询问题

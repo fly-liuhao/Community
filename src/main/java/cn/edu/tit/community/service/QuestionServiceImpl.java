@@ -2,6 +2,8 @@ package cn.edu.tit.community.service;
 
 import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
+import cn.edu.tit.community.exception.CustomizeErrorCode;
+import cn.edu.tit.community.exception.CustomizeException;
 import cn.edu.tit.community.mapper.QuestionMapper;
 import cn.edu.tit.community.model.Question;
 import cn.edu.tit.community.model.QuestionExample;
@@ -38,7 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public int findQuestionCountByID(int creator) {
+    public int findQuestionCountByCreator(int creator) {
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(creator);
         return (int) questionMapper.countByExample(questionExample);
@@ -65,7 +67,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionDTO> findQuestionByID(int offset, Integer pageSize, int creator) {
+    public List<QuestionDTO> findQuestionByCreator(int offset, Integer pageSize, int creator) {
         // 获取分页后的问题集合
         QuestionExample example = new QuestionExample();
         example.createCriteria().andCreatorEqualTo(creator);
@@ -93,6 +95,9 @@ public class QuestionServiceImpl implements QuestionService {
     public QuestionDTO getQuestionByID(int id) {
 
         Question question = questionMapper.selectByPrimaryKey(id);
+        if (question == null) {
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         User user = userService.findUserById(question.getCreator());
@@ -116,7 +121,10 @@ public class QuestionServiceImpl implements QuestionService {
             example.createCriteria()
                     .andIdEqualTo(question.getId());
             question.setGmtModify(System.currentTimeMillis());
-            questionMapper.updateByExampleSelective(updateQuestion, example);
+            int updateResult = questionMapper.updateByExampleSelective(updateQuestion, example);
+            if (updateResult == 0) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 

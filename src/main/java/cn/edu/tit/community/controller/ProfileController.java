@@ -33,7 +33,7 @@ public class ProfileController {
                 return "redirect:/";
             }
             // 处理分页数据
-            int totalCount = questionService.findQuestionCountByID(user.getId());
+            int totalCount = questionService.findQuestionCountByCreator(user.getId());
             int totalPage = (totalCount % pageSize == 0) ? totalCount / pageSize : totalCount / pageSize + 1;
             if (currPage < 1) {
                 currPage = 1;
@@ -45,7 +45,7 @@ public class ProfileController {
 
             // 查询该用户当前页的问题
             List<QuestionDTO> questionList = new ArrayList<QuestionDTO>();
-            questionList = questionService.findQuestionByID(offset, pageSize, user.getId());
+            questionList = questionService.findQuestionByCreator(offset, pageSize, user.getId());
             // 获取用于分页的信息
             PageInfoDTO pageInfoDTO = questionService.getPageInfo(currPage, totalPage);
             // 将数据添加到Model中去（用于前端使用）

@@ -60,10 +60,10 @@ public class IndexController {
     /**
      * 出现错误跳转错误页面
      */
-    @GetMapping(value = "/error")
-    public String error() {
-        return "error";
-    }
+//    @GetMapping(value = "/error")
+//    public String error() {
+//        return "error";
+//    }
 
     /**
      * 退出登录

@@ -43,3 +43,7 @@ body {
 .question-modifyicon {
     color: #999999;
 }
+
+.jumbotron {
+    padding: 50px;
+}
