@@ -11,6 +11,7 @@ import cn.edu.tit.community.model.Comment;
 import cn.edu.tit.community.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -28,6 +29,7 @@ public class CommentServiceImpl implements CommentService {
     QuestionExtMapper questionExtMapper;
 
     @Override
+    @Transactional
     public boolean addComment(Comment comment) {
 
         // 该问题不存在
