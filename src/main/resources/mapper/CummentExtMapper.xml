@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.edu.tit.community.mapper.QuestionExtMapper">
-
-    <!-- 实现问题阅读数的增加 -->
-    <update id="incViewCount">
-        update QUESTION
-        set  VIEW_COUNT = VIEW_COUNT + #{step,jdbcType=INTEGER}
-         where id=#{id}
-    </update>
+<mapper namespace="cn.edu.tit.community.mapper.CommentExtMapper">
 
     <!-- 实现评论的回复数的增加 -->
     <update id="incCommentCount">
-        update QUESTION
+        update COMMENT
         set  COMMENT_COUNT = COMMENT_COUNT + #{step,jdbcType=INTEGER}
          where id=#{id}
     </update>

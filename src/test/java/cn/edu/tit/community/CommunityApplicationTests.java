@@ -8,6 +8,9 @@ class CommunityApplicationTests {
 
     @Test
     void contextLoads() {
+        Integer a = null;
+        int b = a;
+        System.out.println(b);
     }
 
 }

@@ -2,7 +2,7 @@ package cn.edu.tit.community.service;
 
 import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
-import cn.edu.tit.community.exception.CustomizeErrorCode;
+import cn.edu.tit.community.enums.CustomizeErrorCodeEnum;
 import cn.edu.tit.community.exception.CustomizeException;
 import cn.edu.tit.community.mapper.QuestionExtMapper;
 import cn.edu.tit.community.mapper.QuestionMapper;
@@ -100,7 +100,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         Question question = questionMapper.selectByPrimaryKey(id);
         if (question == null) {
-            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FOUND);
         }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
@@ -127,7 +127,7 @@ public class QuestionServiceImpl implements QuestionService {
             question.setGmtModify(System.currentTimeMillis());
             int updateResult = questionMapper.updateByExampleSelective(updateQuestion, example);
             if (updateResult == 0) {
-                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+                throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FOUND);
             }
         }
     }
@@ -136,7 +136,7 @@ public class QuestionServiceImpl implements QuestionService {
     public void incViewCount(int id, int step) {
         int updateResult = questionExtMapper.incViewCount(id, step);
         if (updateResult == 0) {
-            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FOUND);
         }
     }
 
