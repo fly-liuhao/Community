@@ -28,7 +28,6 @@ public class CommentController {
         if (user == null) {
             return ResponseDTO.errorOf(2001,"用户未登录！！！");
         }
-        System.out.println("悄悄地进入...");
         Comment comment = new Comment();
         comment.setContent(commentDto.getContent());
         comment.setParentId(commentDto.getParentId());

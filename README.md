@@ -23,9 +23,9 @@
 - [Lombok](https://projectlombok.org/features/all)：使用@Data注解，自动生成geter、seter、toString、equals等方法，但是IDEA需要引入lombok插件
 - [Thymeleaf 模板引擎官方文档](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html)：类似于JSP页面的EL表达式以及JSTL表达式
 - [Spring Developer Tools 工具——IDEA热部署插件](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-embedded-database-support)：引入依赖-->IDEA配置自动Bulid-->修改IDEA注册表-->Chrome 安装 LiveReload 插件-->启动项目
-- [Spring Web MVC](https://docs.spring.io/spring/docs/5.0.3.RELEASE/spring-framework-reference/web.html#mvc-handlermapping-interceptor)：官方文档，eg:拦截器、
+- [Spring Web MVC](https://docs.spring.io/spring/docs/5.0.3.RELEASE/spring-framework-reference/web.html#mvc-handlermapping-interceptor)：官方文档，eg:拦截器
 - [MyBatis Generator](http://mybatis.org/generator/)：反向创建数据库表对应model、mapper接口以及映射文件
-
+- [JQuery API 官方文档](https://api.jquery.com/)：使用Ajax请求
 #### 工具
 - [Git](https://git-scm.com/)
 - [Visual Paradigm UML绘图工具](https://www.visual-paradigm.com)

@@ -13,13 +13,13 @@ body {
     margin-bottom: 30px;
 }
 
-.text-desc{
+.text-desc {
     font-size: 12px;
     font-weight: normal;
     color: #999;
 }
 
-.media-object{
+.media-object {
     width: 40px;
 }
 
@@ -30,20 +30,32 @@ body {
 .question-title {
     margin-top: 15px;
 }
+
 .question-info {
     margin-top: 15px;
     font-size: 13px;
     color: #999999;
 }
+
 .question-desc {
     position: relative;
     z-index: 1;
     line-height: 1.6;
 }
+
 .question-modifyicon {
     color: #999999;
 }
 
 .jumbotron {
     padding: 50px;
+}
+
+.comment-btn {
+    float: right;
+    margin-bottom: 15px;
+}
+
+.comment-textarea {
+    margin: 10px 0;
 }
