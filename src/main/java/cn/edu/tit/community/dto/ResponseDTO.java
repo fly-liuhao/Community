@@ -34,4 +34,10 @@ public class ResponseDTO {
         responseDTO.message = customizeException.getMessage();
         return responseDTO;
     }
+
+    public static ResponseDTO okOf() {
+        responseDTO.code = 200;
+        responseDTO.message = "请求成功";
+        return responseDTO;
+    }
 }

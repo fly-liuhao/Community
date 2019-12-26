@@ -2,6 +2,8 @@ package cn.edu.tit.community.controller;
 
 import cn.edu.tit.community.dto.CommentDto;
 import cn.edu.tit.community.dto.ResponseDTO;
+import cn.edu.tit.community.enums.CustomizeErrorCodeEnum;
+import cn.edu.tit.community.exception.CustomizeException;
 import cn.edu.tit.community.model.Comment;
 import cn.edu.tit.community.model.User;
 import cn.edu.tit.community.service.CommentService;
@@ -26,7 +28,7 @@ public class CommentController {
 
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
-            return ResponseDTO.errorOf(2001,"用户未登录！！！");
+            return ResponseDTO.errorOf(new CustomizeException(CustomizeErrorCodeEnum.NO_LOGIN));
         }
         Comment comment = new Comment();
         comment.setContent(commentDto.getContent());
@@ -41,7 +43,7 @@ public class CommentController {
         // 添加评论
         commentService.addComment(comment);
 
-        return ResponseDTO.errorOf(200,"请求成功！！！");
+        return ResponseDTO.okOf();
     }
 
 }

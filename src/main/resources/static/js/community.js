@@ -23,8 +23,25 @@ function addComment(comment_type) {
                 console.log(result);
                 $('#comment_area').hide();
             } else {
-                alert(result.message)
+                if (result.code == 2003) {
+                    var isAccepted = confirm(result.message);
+                    if (isAccepted) {
+                        window.open("https://github.com/login/oauth/authorize?client_id=78111a4363ecd4d6b210&redirect_uri=http://localhost:8080/callback&scope=user&state=randomString");
+                        window.localStorage.setItem("isclose", true);
+                    }
+                } else {
+                    alert(result.message)
+                }
             }
         }
     });
+}
+
+/*index.html页面*/
+function isClose() {
+    var isclose = window.localStorage.getItem("isclose");
+    if (isclose) {
+        window.close();
+        window.localStorage.removeItem("isclose");
+    }
 }

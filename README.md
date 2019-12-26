@@ -26,6 +26,9 @@
 - [Spring Web MVC](https://docs.spring.io/spring/docs/5.0.3.RELEASE/spring-framework-reference/web.html#mvc-handlermapping-interceptor)：官方文档，eg:拦截器
 - [MyBatis Generator](http://mybatis.org/generator/)：反向创建数据库表对应model、mapper接口以及映射文件
 - [JQuery API 官方文档](https://api.jquery.com/)：使用Ajax请求
+- [Window localStorage 属性](https://www.runoob.com/jsref/prop-win-localstorage.html)：用于浏览器端存储数据（HTML5）,类似于Cookie但更加强大
+
+
 #### 工具
 - [Git](https://git-scm.com/)
 - [Visual Paradigm UML绘图工具](https://www.visual-paradigm.com)
