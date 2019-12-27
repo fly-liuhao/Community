@@ -85,6 +85,15 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <!-- apache下的开发工具包，更方便我们的编程 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+
+
         <!--用于Spring boot单元测试-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

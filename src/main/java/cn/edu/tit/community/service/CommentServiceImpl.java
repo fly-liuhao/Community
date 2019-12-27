@@ -1,5 +1,6 @@
 package cn.edu.tit.community.service;
 
+import cn.edu.tit.community.dto.CommentDTO;
 import cn.edu.tit.community.enums.CommentTypeEnum;
 import cn.edu.tit.community.enums.CustomizeErrorCodeEnum;
 import cn.edu.tit.community.exception.CustomizeException;
@@ -8,10 +9,17 @@ import cn.edu.tit.community.mapper.CommentMapper;
 import cn.edu.tit.community.mapper.QuestionExtMapper;
 import cn.edu.tit.community.mapper.QuestionMapper;
 import cn.edu.tit.community.model.Comment;
+import cn.edu.tit.community.model.CommentExample;
 import cn.edu.tit.community.model.Question;
+import cn.edu.tit.community.model.User;
+import cn.edu.tit.community.util.TimeFormat;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -27,6 +35,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     QuestionExtMapper questionExtMapper;
+
+    @Autowired
+    UserService userService;
 
     @Override
     @Transactional
@@ -73,5 +84,32 @@ public class CommentServiceImpl implements CommentService {
             int incResult = commentExtMapper.incCommentCount(comment.getParentId(), 1);
             return insertResult != 0 && incResult != 0 ? true : false;
         }
+    }
+
+    @Override
+    public List<CommentDTO> findComment(int parentId, int type) {
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria()
+                .andParentIdEqualTo(parentId)
+                .andTypeEqualTo(type);
+        // 按时间顺序排列（从大到小）
+        commentExample.setOrderByClause("gmt_create desc");
+        // 根据提供的父id以及类型type获取评论
+        List<Comment> commentList = commentMapper.selectByExample(commentExample);
+        // 定义用于传输的评论集合
+        List<CommentDTO> commentDtoList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            CommentDTO commentDTO = new CommentDTO();
+            // 将两个对象中相同字段的属性值自动拷贝到另一个实体对象中去
+            BeanUtils.copyProperties(comment, commentDTO);
+            // 格式化日期
+            String pubtime = TimeFormat.timeFormat(comment.getGmtCreate());
+            commentDTO.setPubtime(pubtime);
+            // 根据评论者ID获取该用户信息
+            User user = userService.findUserById(comment.getCommentator());
+            commentDTO.setUser(user);
+            commentDtoList.add(commentDTO);
+        }
+        return commentDtoList;
     }
 }

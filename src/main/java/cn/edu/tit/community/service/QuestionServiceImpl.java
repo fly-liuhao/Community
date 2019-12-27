@@ -55,6 +55,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         // 获取分页后的问题集合
         QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_modify desc");
         example.createCriteria();
         List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, pageSize));
         // 用于传输时的问题集合（补充了创建问题的用户信息）
@@ -74,6 +75,7 @@ public class QuestionServiceImpl implements QuestionService {
     public List<QuestionDTO> findQuestionByCreator(int offset, Integer pageSize, int creator) {
         // 获取分页后的问题集合
         QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_modify desc");
         example.createCriteria().andCreatorEqualTo(creator);
         List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, pageSize));
         // 用于传输时的问题集合（补充了创建问题的用户信息）
@@ -113,6 +115,11 @@ public class QuestionServiceImpl implements QuestionService {
     public void addOrModifyQuestion(Question question) {
         if (question.getId() == null) {
             // 添加问题
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModify(question.getGmtCreate());
+            question.setCommentCount(0);
+            question.setViewCount(0);
+            question.setLikeCount(0);
             questionMapper.insert(question);
         } else {
             // 修改问题

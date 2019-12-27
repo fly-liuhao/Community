@@ -32,9 +32,10 @@ public class PublishController {
     public String doPublish(@RequestParam(name = "title") String title,
                             @RequestParam(name = "description") String description,
                             @RequestParam(name = "tag") String tag,
-                            @RequestParam(name = "id") int id,
+                            @RequestParam(name = "id") Integer id,
                             HttpServletRequest request,
                             Model model) {
+
         model.addAttribute("id", id);
         model.addAttribute("title", title);
         model.addAttribute("description", description);
@@ -65,8 +66,6 @@ public class PublishController {
         question.setDescription(description);
         question.setTag(tag);
         question.setCreator(user.getId());
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModify(question.getGmtCreate());
 
         // 添加或修改问题
         questionService.addOrModifyQuestion(question);

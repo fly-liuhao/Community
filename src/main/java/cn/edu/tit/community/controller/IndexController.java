@@ -32,7 +32,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model,
                         @RequestParam(name = "currPage", defaultValue = "1") Integer currPage,
-                        @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize) {
+                        @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
 
         // 处理分页数据
         int totalCount = questionService.findQuestionCount();

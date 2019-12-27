@@ -14,8 +14,9 @@
 <div th:replace="navigation :: nav"></div>
 <div class="container-fluid main">
     <div class="row">
-        <div class="col-md-9 col-md-12 col-sm-12 col-xs-12 question-title">
-            <div class="col-md-12 col-md-12 col-sm-12 col-xs-12 question-title">
+        <div class="col-md-9 col-md-12 col-sm-12 col-xs-12">
+            <!-- 问题详情区域 -->
+            <div class="col-md-12 col-md-12 col-sm-12 col-xs-12 comment-margin-top">
                 <h4 class="media-heading " th:text="${question.title}"></h4>
                 <input type="hidden" id="question_id" th:value="${question.getId()}"/>
                 <div class="question-info">
@@ -24,15 +25,49 @@
                     阅读数：<span th:text="${question.viewCount}"></span>
                 </div>
                 <hr/>
-                <a th:if="${session.user!=null && question.creator == session.user.getId()}"
-                   th:href="@{'/publish/'+${question.getId()}}" class="question-modifyicon">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 编辑
-                </a>
+                <p th:text="${question.description}" class="question-desc"></p>&nbsp;
                 <hr/>
-                <span th:text="${question.description}" class="question-desc"></span>&nbsp;
-                <hr/>
+                <!--编辑按钮区域-->
+                <div class="question-modify-icon">
+                    <span class="label label-primary question-tag" th:text="${question.getTag()}"></span>
+                    <a th:href="@{'/publish/'+${question.getId()}}" class="question-modify-icon pull-right">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 编辑
+                    </a>
+                </div>
             </div>
-            <div id="comment_area" class="col-md-12 col-md-12 col-sm-12 col-xs-12 question-title">
+
+            <!-- 问题回复列表区域 -->
+            <div class="col-md-12 col-md-12 col-sm-12 col-xs-12 comment-margin-top ">
+                <div>
+                    <h3>
+                        <span th:text="${question.getCommentCount()}"></span>个回复
+                    </h3>
+                    <hr/>
+                </div>
+                <div class="media comment-list" th:each="comment : ${comments}">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}" alt="jpg">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading">
+                            <span th:text="${comment.user.name}"></span>
+                            <span class="text-desc" th:text="${comment.user.bio}"></span>
+                        </h5>
+                        <p th:text="${comment.content}"></p>
+                        <div>
+                            <a href="#"><span class="glyphicon glyphicon-thumbs-up comment-icon"></span></a>
+                            <a href="#"><span class="glyphicon glyphicon-comment comment-icon"></span></a>
+                            <span class="pull-right comment-time" th:text="${comment.pubtime}"></span>
+                        </div>
+                    </div>
+                    <hr th:unless="${comment.equals(comments.get(comments.size()-1))}"/>
+                </div>
+            </div>
+
+            <!-- 用户回复区域 -->
+            <div id="comment_area" class="col-md-12 col-md-12 col-sm-12 col-xs-12 comment-margin-top">
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
@@ -45,14 +80,14 @@
                         </h5>
                     </div>
                 </div>
-                <textarea id="comment" class="form-control comment-textarea" rows="6"></textarea>
+                <textarea id="comment" class="form-control comment-textarea" rows="6" placeholder="填写你要回复的内容..."></textarea>
                 <button type="button" class="btn btn-success comment-btn" onclick="addComment(1)">回复</button>
             </div>
 
         </div>
         <div class="col-md-3 col-md-12 col-sm-12 col-xs-12">
             <!-- 问题发起指南 -->
-            <div class="aw-mod publish-help">
+            <div class="aw-mod publish-help community-margin-top">
                 <div class="mod-head">
                     <h4>发起人</h4>
                     <div class="media">
