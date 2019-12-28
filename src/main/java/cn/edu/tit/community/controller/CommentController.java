@@ -1,7 +1,9 @@
 package cn.edu.tit.community.controller;
 
+import cn.edu.tit.community.dto.CommentDTO;
 import cn.edu.tit.community.dto.CommentRequestDTO;
 import cn.edu.tit.community.dto.ResponseDTO;
+import cn.edu.tit.community.enums.CommentTypeEnum;
 import cn.edu.tit.community.enums.CustomizeErrorCodeEnum;
 import cn.edu.tit.community.exception.CustomizeException;
 import cn.edu.tit.community.model.Comment;
@@ -13,24 +15,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
     @Autowired
     CommentService commentService;
 
+    @CrossOrigin
     @ResponseBody
     @PostMapping("/comment")
-    @CrossOrigin
-    public Object comment(@RequestBody CommentRequestDTO commentRequestDTO,
-                          HttpServletRequest request) {
+    public ResponseDTO comment(@RequestBody CommentRequestDTO commentRequestDTO,
+                               HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
         if (user == null) {
             return ResponseDTO.errorOf(new CustomizeException(CustomizeErrorCodeEnum.NO_LOGIN));
         }
         // 判断使用了apache提供的工具包
-        if(commentRequestDTO.getContent() == null || StringUtils.isBlank(commentRequestDTO.getContent())){
+        if (commentRequestDTO.getContent() == null || StringUtils.isBlank(commentRequestDTO.getContent())) {
             return ResponseDTO.errorOf(new CustomizeException(CustomizeErrorCodeEnum.CONTENT_IS_EMPTY));
         }
         Comment comment = new Comment();
@@ -45,8 +48,15 @@ public class CommentController {
 
         // 添加评论
         commentService.addComment(comment);
-
         return ResponseDTO.okOf();
     }
 
+
+    @CrossOrigin
+    @ResponseBody
+    @GetMapping("/getComment")
+    public ResponseDTO getSecondLevelComment(@RequestParam("parentId") int parentId) {
+        List<CommentDTO> commentDTO = commentService.findComment(parentId, CommentTypeEnum.COMMENT);
+        return ResponseDTO.okOf(commentDTO);
+    }
 }

@@ -1,21 +1,21 @@
 /*添加评论*/
-function addComment(comment_type) {
-    var param = comment_type == 1
+function addComment(commentParentId, commentType) {
+    var param = commentType == 1
         ? {
-            parentId: $('#question_id').val(),
-            content: $('#comment').val(),
-            type: comment_type
+            parentId: commentParentId,
+            content: $("#question_comment_content").val(),
+            type: commentType
         }
         : {
-            parentId: $('#comment_id').val(),
-            content: $('#comment').val(),
-            type: comment_type
+            parentId: commentParentId,
+            content: $("#second_level_comment_" + commentParentId + "_content").val(),
+            type: commentType
         }
-        // js比较特殊，如果有值直接返回true，没值返回false
-        if(!param.content){
-            alert("回复的内容不能为空！");
-            return;
-        }
+    // js比较特殊，如果有值直接返回true，没值返回false
+    if (!param.content) {
+        alert("回复的内容不能为空！");
+        return;
+    }
 
     $.ajax({
         type: "POST",
@@ -42,6 +42,64 @@ function addComment(comment_type) {
         }
     });
 }
+
+/* 获取二级回复 */
+function getSecondLevelComment(commentParentId) {
+    console.log(commentParentId);
+    // 获取评论区dom元素
+    var secondLevelCommentDom = $("#comment_" + commentParentId);
+    // 获取评论图标的dom元素
+    var commentIconDom = secondLevelCommentDom.prev().children(".glyphicon-comment");
+    secondLevelCommentDom.toggleClass("in");
+    commentIconDom.toggleClass("active");
+
+    if (secondLevelCommentDom.hasClass("in")) {
+        $.getJSON("/getComment?parentId=" + commentParentId, function (data) {
+            $(data.map.data.reverse()).each(function (index, comment) {
+                // 拼接html
+                var mediaLiftElement = $("<div/>", {
+                    "class": "media-left"
+                }).append($("<a/>", {
+                    "href": "#"
+                }).append($("<img/>", {
+                    "class": "media-object img-rounded",
+                    "src": comment.user.avatarUrl,
+                    "alt": "jpg"
+                })));
+
+                var mediaBodyElement = $("<div/>", {
+                    "class": "media-body"
+                }).append($("<h5/>", {
+                    "class": "media-heading"
+                }).append($("<span/>", {
+                    "html": comment.user.name
+                })).append($("<span/>", {
+                    "class": "text-desc",
+                    "html": comment.user.bio
+                }))).append($("<p/>", {
+                    "html": comment.content
+                })).append($("<span/>", {
+                    "class": "pull-right comment-time",
+                    "html": moment(comment.gmtCreate).fromNow()
+                    // "html": comment.pubtime
+                }));
+
+                var mediaElement = $("<div/>", {
+                    "class": "media"
+                }).append(mediaLiftElement)
+                    .append(mediaBodyElement);
+                if(index == 1){
+                    mediaElement.append($("<hr/>"));
+                }
+
+
+                // 将拼接好的html拼接到前端页面中
+                secondLevelCommentDom.prepend(mediaElement);
+            });
+        });
+    }
+}
+
 
 /*index.html页面*/
 function isClose() {

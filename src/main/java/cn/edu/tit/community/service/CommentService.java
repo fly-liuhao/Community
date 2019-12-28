@@ -1,6 +1,7 @@
 package cn.edu.tit.community.service;
 
 import cn.edu.tit.community.dto.CommentDTO;
+import cn.edu.tit.community.enums.CommentTypeEnum;
 import cn.edu.tit.community.model.Comment;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface CommentService {
      * @param type
      * @return
      */
-    public List<CommentDTO> findComment(int parentId, int type);
+    public List<CommentDTO> findComment(int parentId, CommentTypeEnum type);
 }

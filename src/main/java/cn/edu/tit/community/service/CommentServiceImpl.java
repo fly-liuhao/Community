@@ -87,11 +87,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDTO> findComment(int parentId, int type) {
+    public List<CommentDTO> findComment(int parentId, CommentTypeEnum type) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
                 .andParentIdEqualTo(parentId)
-                .andTypeEqualTo(type);
+                .andTypeEqualTo(type.getType());
         // 按时间顺序排列（从大到小）
         commentExample.setOrderByClause("gmt_create desc");
         // 根据提供的父id以及类型type获取评论

@@ -27,6 +27,7 @@
 - [MyBatis Generator](http://mybatis.org/generator/)：反向创建数据库表对应model、mapper接口以及映射文件
 - [JQuery API 官方文档](https://api.jquery.com/)：使用Ajax请求
 - [Window localStorage 属性](https://www.runoob.com/jsref/prop-win-localstorage.html)：用于浏览器端存储数据（HTML5）,类似于Cookie但更加强大
+- [Moment.js](http://momentjs.cn/)：JavaScript 日期处理类库
 
 
 #### 工具

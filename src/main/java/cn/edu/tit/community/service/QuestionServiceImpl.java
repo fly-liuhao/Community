@@ -55,7 +55,7 @@ public class QuestionServiceImpl implements QuestionService {
 
         // 获取分页后的问题集合
         QuestionExample example = new QuestionExample();
-        example.setOrderByClause("gmt_modify desc");
+        example.setOrderByClause("gmt_create desc");
         example.createCriteria();
         List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, pageSize));
         // 用于传输时的问题集合（补充了创建问题的用户信息）

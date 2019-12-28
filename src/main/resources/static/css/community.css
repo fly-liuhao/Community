@@ -92,6 +92,10 @@ body {
     color: #99CCCC;
 }
 
+.comment-list .active {
+    color: #499ef3;
+}
+
 .comment-list .comment-time {
     margin: 10px 20px 10px 0;
     font-size: 13px;
@@ -99,5 +103,17 @@ body {
     color: #999;
 }
 .comment-list hr {
-   margin-top: 0;
+   margin-top: 0px;
+}
+
+.comment-list .comment-second-level {
+    margin: 5px 0 20px 0;
+    padding: 20px 15px 10px 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.comment-list .comment-second-level-btn {
+    margin-top: 10px;
 }

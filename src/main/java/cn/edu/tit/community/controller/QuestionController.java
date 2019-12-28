@@ -2,6 +2,7 @@ package cn.edu.tit.community.controller;
 
 import cn.edu.tit.community.dto.CommentDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
+import cn.edu.tit.community.enums.CommentTypeEnum;
 import cn.edu.tit.community.model.Comment;
 import cn.edu.tit.community.service.CommentService;
 import cn.edu.tit.community.service.QuestionService;
@@ -31,7 +32,7 @@ public class QuestionController {
             questionDTO.setViewCount(questionDTO.getViewCount()+1);
         }
         // 获取问题的回复
-        List<CommentDTO> commentDTO = commentService.findComment(id,1);
+        List<CommentDTO> commentDTO = commentService.findComment(id, CommentTypeEnum.QUESTION);
 
         // 传输到前端页面
         model.addAttribute("question", questionDTO);
