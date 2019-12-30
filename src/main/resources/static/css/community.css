@@ -17,10 +17,6 @@ body {
     height: 100%;
 }
 
-.btn-publish {
-    float: right;
-    margin-bottom: 30px;
-}
 
 .text-desc {
     font-size: 12px;
@@ -35,6 +31,31 @@ body {
 .media-object {
     width: 40px;
 }
+
+.publish-tag-area {
+    display: none;
+}
+
+.publish-tag-bar {
+    margin: 10px 0;
+}
+
+.publish-tag {
+    background-color: #3498DB;
+    font-size: 13px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px 3px;
+}
+
+.publish-tag:hover {
+    background-color: #337ab7;
+}
+
+.publish-btn {
+    margin-bottom: 30px;
+}
+
 
 .profile .section {
     margin-top: 15px;
@@ -51,16 +72,22 @@ body {
 }
 
 .question-desc {
-    position: relative;
-    z-index: 1;
+    text-indent:2em;
     line-height: 1.6;
+    font-weight: 800;
 }
+
+.question-tag-area {
+    margin-top: 20px;
+}
+
 .question-tag {
+    display: inline-block;
+    margin: 0 3px 5px 0;
     font-size: 13px;
 }
 
 .question-modify-icon {
-    margin: 10px;
     color: #999999;
 }
 
@@ -102,8 +129,9 @@ body {
     font-weight: normal;
     color: #999;
 }
+
 .comment-list hr {
-   margin-top: 0px;
+    margin-top: 0px;
 }
 
 .comment-list .comment-second-level {
@@ -116,4 +144,17 @@ body {
 
 .comment-list .comment-second-level-btn {
     margin-top: 10px;
+}
+
+.advertising {
+    margin: 20px 0;
+    padding: 10px;
+}
+
+.advertising-img {
+    width: 100%;
+}
+
+.related-link {
+    margin-bottom: 2px;
 }

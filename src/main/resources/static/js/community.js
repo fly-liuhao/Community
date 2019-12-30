@@ -88,7 +88,7 @@ function getSecondLevelComment(commentParentId) {
                     "class": "media"
                 }).append(mediaLiftElement)
                     .append(mediaBodyElement);
-                if(index == 1){
+                if (index == 1) {
                     mediaElement.append($("<hr/>"));
                 }
 
@@ -107,6 +107,26 @@ function isClose() {
     if (isclose) {
         window.close();
         window.localStorage.removeItem("isclose");
+    }
+}
+
+/* 打开发布问题的标签库 */
+function showTags() {
+    $("#tag_lib").show();
+}
+
+/* 添加标签 */
+function addTag(tag) {
+    // 获取已输入的标签
+    var original = $("#tag").val();
+
+    // 判断新加入标签是否已存在（不包含返回-1）
+    if (original.indexOf(tag) == -1) {
+        if (original) {
+            $("#tag").val(original + ', ' + tag);
+        } else {
+            $("#tag").val(tag);
+        }
     }
 }
 

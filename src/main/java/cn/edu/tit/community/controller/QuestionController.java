@@ -3,7 +3,6 @@ package cn.edu.tit.community.controller;
 import cn.edu.tit.community.dto.CommentDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
 import cn.edu.tit.community.enums.CommentTypeEnum;
-import cn.edu.tit.community.model.Comment;
 import cn.edu.tit.community.service.CommentService;
 import cn.edu.tit.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +26,19 @@ public class QuestionController {
     public String question(@RequestParam("id") int id, Model model) {
         // 获取问题的详细信息
         QuestionDTO questionDTO = questionService.getQuestionByID(id);
-        if(questionDTO != null){
-            questionService.incViewCount(questionDTO.getId(),1);
-            questionDTO.setViewCount(questionDTO.getViewCount()+1);
+        if (questionDTO != null) {
+            questionService.incViewCount(questionDTO.getId(), 1);
+            questionDTO.setViewCount(questionDTO.getViewCount() + 1);
         }
         // 获取问题的回复
         List<CommentDTO> commentDTO = commentService.findComment(id, CommentTypeEnum.QUESTION);
+        // 获取相似问题
+        List<QuestionDTO> similarQuestionDTO = questionService.getSimilarQuestion(questionDTO);
 
         // 传输到前端页面
         model.addAttribute("question", questionDTO);
         model.addAttribute("comments", commentDTO);
+        model.addAttribute("relatedQuestions", similarQuestionDTO);
         return "question";
     }
 }

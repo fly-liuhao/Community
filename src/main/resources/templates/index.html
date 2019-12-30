@@ -25,7 +25,7 @@
                     </a>
                 </div>
                 <div class="media-body">
-                    <a th:href="@{'/question/?id='+${question.getId()}}">
+                    <a th:href="@{'/question/?id='+${question.id}}">
                         <h5 class="media-heading" th:text="${question.title}"></h5>
                     </a>
                     <span th:text="${question.description}"></span>&nbsp;

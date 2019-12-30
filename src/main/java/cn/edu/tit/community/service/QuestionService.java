@@ -1,5 +1,6 @@
 package cn.edu.tit.community.service;
 
+import cn.edu.tit.community.dto.CommentDTO;
 import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
 import cn.edu.tit.community.model.Question;
@@ -75,9 +76,18 @@ public interface QuestionService {
 
     /**
      * 实现阅读数的增加
-     * @param id 问题ID
+     *
+     * @param id   问题ID
      * @param step 步长
      * @return 数据库影响的行数
      */
     void incViewCount(int id, int step);
+
+    /**
+     * 获取问题的相似问题
+     *
+     * @param questionDTO 原始问题实体
+     * @return 查找到的相似问题集合
+     */
+    List<QuestionDTO> getSimilarQuestion(QuestionDTO questionDTO);
 }

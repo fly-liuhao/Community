@@ -1,5 +1,6 @@
 package cn.edu.tit.community.service;
 
+import cn.edu.tit.community.dto.CommentDTO;
 import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
 import cn.edu.tit.community.enums.CustomizeErrorCodeEnum;
@@ -9,13 +10,16 @@ import cn.edu.tit.community.mapper.QuestionMapper;
 import cn.edu.tit.community.model.Question;
 import cn.edu.tit.community.model.QuestionExample;
 import cn.edu.tit.community.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -145,6 +149,30 @@ public class QuestionServiceImpl implements QuestionService {
         if (updateResult == 0) {
             throw new CustomizeException(CustomizeErrorCodeEnum.QUESTION_NOT_FOUND);
         }
+    }
+
+    @Override
+    public List<QuestionDTO> getSimilarQuestion(QuestionDTO srcQuestionDTO) {
+        if (StringUtils.isBlank(srcQuestionDTO.getTag())) {
+            return new ArrayList<>();
+        }
+        // 将标签中的逗号（包含中英文）替换成"|"，用于数据库正则表达式模糊查询
+        String regexpTag = srcQuestionDTO.getTag().replaceAll(",|，", "|");
+
+        Question question = new Question();
+        question.setId(srcQuestionDTO.getId());
+        question.setTag(regexpTag);
+
+        List<Question> questionList = questionExtMapper.selectSimilarQuestion(question);
+
+        // 使用λ表达式
+        List<QuestionDTO> questionDTOS = questionList.stream().map(q -> {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(q, questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+
+        return questionDTOS;
     }
 
 }

@@ -8,6 +8,7 @@
 - [elastic中文社区](https://elasticsearch.cn/)
 - [V2EX论坛](https://www.v2ex.com/t/624147#reply26)
 - [知乎](https://www.zhihu.com/)
+- [思否](https://segmentfault.com/blogs)
 
 #### 资料
 - [小匠社区github源码](https://github.com/codedrinker/community)：作者的github仓库地址
