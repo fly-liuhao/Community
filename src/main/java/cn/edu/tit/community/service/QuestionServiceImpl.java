@@ -96,6 +96,35 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public int findQuestionCountByTitle(String keyword) {
+        // 获取分页后的问题集合
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_modify desc");
+        example.createCriteria().andTitleLike("%" + keyword + "%");
+        return (int) questionMapper.countByExample(example);
+    }
+
+    @Override
+    public List<QuestionDTO> findQuestionByTitle(int offset, Integer pageSize, String keyword) {
+        // 获取分页后的问题集合
+        QuestionExample example = new QuestionExample();
+        example.setOrderByClause("gmt_modify desc");
+        example.createCriteria().andTitleLike("%" + keyword + "%");
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, pageSize));
+        // 用于传输时的问题集合（补充了创建问题的用户信息）
+        List<QuestionDTO> questionDtoList = new ArrayList<QuestionDTO>();
+        for (Question question : questionList) {
+            QuestionDTO questionDTO = new QuestionDTO();
+            // 将两个对象中相同字段的属性值自动拷贝到另一个实体对象中去
+            BeanUtils.copyProperties(question, questionDTO);
+            User user = userService.findUserById(question.getCreator());
+            questionDTO.setUser(user);
+            questionDtoList.add(questionDTO);
+        }
+        return questionDtoList;
+    }
+
+    @Override
     public PageInfoDTO getPageInfo(int currPage, int pageSize) {
         PageInfoDTO pageInfoDTO = new PageInfoDTO(currPage, pageSize);
         return pageInfoDTO;
@@ -174,5 +203,4 @@ public class QuestionServiceImpl implements QuestionService {
 
         return questionDTOS;
     }
-
 }

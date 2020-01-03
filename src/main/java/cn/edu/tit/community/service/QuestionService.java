@@ -44,20 +44,38 @@ public interface QuestionService {
     /**
      * 查询数据库指定ID用户发布的问题总数
      *
-     * @param id 用户ID
+     * @param creator 用户ID
      * @return 该用户发布的问题总个数
      */
-    int findQuestionCountByCreator(int id);
+    int findQuestionCountByCreator(int creator);
 
     /**
      * 分页查询问题
      *
      * @param offset   分页的起始索引
      * @param pageSize 分页时每页个数
-     * @param id       用户ID
+     * @param creator  用户ID
      * @return 查询到的某用户发布的问题集合
      */
-    List<QuestionDTO> findQuestionByCreator(int offset, Integer pageSize, int id);
+    List<QuestionDTO> findQuestionByCreator(int offset, Integer pageSize, int creator);
+
+    /**
+     * 查询数据库指定ID用户发布的问题总数
+     *
+     * @param keyword 问题的关键字
+     * @return 该用户发布的问题总个数
+     */
+    int findQuestionCountByTitle(String keyword);
+
+    /**
+     * 分页查询问题（按照问题标题关键字）
+     *
+     * @param offset   分页的起始索引
+     * @param pageSize 分页时每页个数
+     * @param keyword  问题的关键字
+     * @return 查询到的某用户发布的问题集合
+     */
+    List<QuestionDTO> findQuestionByTitle(int offset, Integer pageSize, String keyword);
 
     /**
      * 根据问题的id查询问题
