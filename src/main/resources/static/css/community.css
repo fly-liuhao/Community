@@ -71,12 +71,6 @@ body {
     color: #999999;
 }
 
-.question-desc {
-    text-indent: 2em;
-    line-height: 1.6;
-    font-weight: 800;
-}
-
 .question-tag-area {
     margin-top: 20px;
 }
