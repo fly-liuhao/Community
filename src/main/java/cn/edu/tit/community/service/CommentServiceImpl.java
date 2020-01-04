@@ -3,15 +3,10 @@ package cn.edu.tit.community.service;
 import cn.edu.tit.community.dto.CommentDTO;
 import cn.edu.tit.community.enums.CommentTypeEnum;
 import cn.edu.tit.community.enums.CustomizeErrorCodeEnum;
+import cn.edu.tit.community.enums.NotificationStatusEnum;
 import cn.edu.tit.community.exception.CustomizeException;
-import cn.edu.tit.community.mapper.CommentExtMapper;
-import cn.edu.tit.community.mapper.CommentMapper;
-import cn.edu.tit.community.mapper.QuestionExtMapper;
-import cn.edu.tit.community.mapper.QuestionMapper;
-import cn.edu.tit.community.model.Comment;
-import cn.edu.tit.community.model.CommentExample;
-import cn.edu.tit.community.model.Question;
-import cn.edu.tit.community.model.User;
+import cn.edu.tit.community.mapper.*;
+import cn.edu.tit.community.model.*;
 import cn.edu.tit.community.util.TimeFormat;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +34,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    NotificationService notificationService;
+
     @Override
     @Transactional
     public boolean addComment(Comment comment) {
@@ -64,6 +62,16 @@ public class CommentServiceImpl implements CommentService {
             int insertResult = commentMapper.insert(comment);
             // 增加问题评论数
             int incResult = questionExtMapper.incCommentCount(comment.getParentId(), 1);
+            // 添加通知
+            Notification notification = new Notification();
+            notification.setNotifier(comment.getCommentator());// 评论者
+            notification.setReceiver(question.getCreator());// 接收者
+            notification.setOuterId(comment.getParentId());// 问题或者评论ID
+            notification.setType(comment.getType()); // 回复问题还是回复评论
+            notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());//这是阅读状态（0：未读，1：已读）
+            notification.setGmtCreate(System.currentTimeMillis());
+            notificationService.addNotification(notification);
+
             return insertResult != 0 && incResult != 0 ? true : false;
         } else {
 
@@ -82,7 +90,17 @@ public class CommentServiceImpl implements CommentService {
             int insertResult = commentMapper.insert(comment);
             // 增加问题评论发回复数
             int incResult = commentExtMapper.incCommentCount(comment.getParentId(), 1);
-            return insertResult != 0 && incResult != 0 ? true : false;
+            // 添加通知
+            Notification notification = new Notification();
+            notification.setNotifier(comment.getCommentator());// 评论者
+            notification.setReceiver(dbComment.getCommentator());// 接收者
+            notification.setOuterId(comment.getParentId());// 问题或者评论ID
+            notification.setType(comment.getType()); // 回复问题还是回复评论
+            notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());//这是阅读状态（0：未读，1：已读）
+            notification.setGmtCreate(System.currentTimeMillis());
+            boolean addNotificationResult = notificationService.addNotification(notification);
+
+            return insertResult != 0 && incResult != 0 && addNotificationResult ? true : false;
         }
     }
 

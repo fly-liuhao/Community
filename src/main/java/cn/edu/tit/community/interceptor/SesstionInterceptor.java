@@ -1,6 +1,7 @@
 package cn.edu.tit.community.interceptor;
 
 import cn.edu.tit.community.model.User;
+import cn.edu.tit.community.service.NotificationService;
 import cn.edu.tit.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpSession;
 public class SesstionInterceptor implements HandlerInterceptor {
     @Autowired
     UserService userService;
+    @Autowired
+    NotificationService notificationService;
 
     // 在进入控制器之前执行
     // 如果返回值为false，阻止进入控制器
@@ -31,6 +34,9 @@ public class SesstionInterceptor implements HandlerInterceptor {
                     if (user != null) {
                         HttpSession session = request.getSession();
                         session.setAttribute("user", user);
+                        //获取通知信息
+                        int unreadCount = notificationService.findNotificationCountByUserUnRead(user.getId());
+                        session.setAttribute("unreadCount", unreadCount);
                         break;
                     }
                 }

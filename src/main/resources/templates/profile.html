@@ -22,7 +22,9 @@
                 <span th:if="${section.equals('draft')}" th:text="我的草稿"></span>
             </h3>
             <hr/>
-            <div class="media" th:each="question : ${questions}">
+
+            <!--我的问题区域-->
+            <div th:if="${section.equals('questions')}" class="media" th:each="question : ${questions}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded" th:src="${question.user.avatarUrl}" alt="avatar.jpg">
@@ -46,6 +48,24 @@
                 </div>
                 <hr th:unless="${question.equals(questions.get(questions.size()-1))}">
             </div>
+
+            <!--回复区域-->
+            <div th:if="${section.equals('replies')}" class="media"
+                 th:each="notification, notificationState : ${notifications}">
+                <div class="replies">
+                    <span th:text="${notification.notifierName +' ' + notification.typeInfo + ' '}"></span>
+                    <a th:href="'/notification/'+ ${notification.id}">
+                        <span class="" th:text="${notification.outerTitle}"></span>
+                    </a>
+                    <span th:class="${notification.status==0?'label label-danger':'label label-info'}"
+                          th:text="${notification.status==0?'未读':'已读'}"></span>
+                    <span class="pull-right replies-time"
+                          th:text="${#dates.format(notification.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+                </div>
+                <hr th:unless="${notificationState.last}">
+            </div>
+
+            <!--分页页码区域-->
             <nav aria-label="Page navigation" class="pull-right">
                 <ul class="pagination">
                     <!--首页-->
@@ -93,7 +113,9 @@
                 <a href="/profile/questions"
                    th:class="${section == 'questions'}? 'active list-group-item' : 'list-group-item'">我的问题</a>
                 <a href="/profile/replies"
-                   th:class="${section == 'replies'}? 'active list-group-item' : 'list-group-item'"><span class="badge">14</span>最新回复</a>
+                   th:class="${section == 'replies'}? 'active list-group-item' : 'list-group-item'">
+                    <span class="badge" th:text="${session.unreadCount}"></span>最新回复
+                </a>
                 <a href="/profile/draft" th:class="${section == 'draft'}? 'active list-group-item' : 'list-group-item'">我的草稿</a>
                 <a href="#" class="list-group-item">我的收藏</a>
                 <a href="#" class="list-group-item">我关注的问题</a>

@@ -72,7 +72,7 @@ body {
 }
 
 .question-desc {
-    text-indent:2em;
+    text-indent: 2em;
     line-height: 1.6;
     font-weight: 800;
 }
@@ -157,4 +157,16 @@ body {
 
 .related-link {
     margin-bottom: 2px;
+}
+
+.replies {
+    margin: 0 15px;
+    overflow: hidden;
+}
+
+.replies .replies-time {
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: normal;
+    color: #999;
 }

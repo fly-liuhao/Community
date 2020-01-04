@@ -2,6 +2,7 @@ package cn.edu.tit.community.controller;
 
 import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
+import cn.edu.tit.community.service.NotificationService;
 import cn.edu.tit.community.service.QuestionService;
 import cn.edu.tit.community.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class IndexController {
 
     @Autowired
     QuestionService questionService;
+    @Autowired
+    NotificationService notificationService;
 
     /**
      * index页面
