@@ -72,11 +72,11 @@
             <version>2.1.1</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin -->
-<!--        <dependency>-->
-<!--            <groupId>com.fasterxml.jackson.module</groupId>-->
-<!--            <artifactId>jackson-module-kotlin</artifactId>-->
-<!--            <version>2.9.7</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.fasterxml.jackson.module</groupId>-->
+        <!--            <artifactId>jackson-module-kotlin</artifactId>-->
+        <!--            <version>2.9.7</version>-->
+        <!--        </dependency>-->
         <!--Lombok插件，使用@Data注解，自动生成geter、seter、toString、equals等方法-->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -91,6 +91,14 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>
+        </dependency>
+
+        <!-- UCloud Ufile SDK for Java -->
+        <!-- 使用UCloud对象存储进行文件存储 -->
+        <dependency>
+            <groupId>cn.ucloud.ufile</groupId>
+            <artifactId>ufile-client-java</artifactId>
+            <version>2.4.0</version>
         </dependency>
 
 
@@ -150,11 +158,11 @@
                         <version>1.4.200</version>
                     </dependency>
                     <!-- MySQL驱动 -->
-<!--                    <dependency>-->
-<!--                        <groupId>mysql</groupId>-->
-<!--                        <artifactId>mysql-connector-java</artifactId>-->
-<!--                        <version>5.1.47</version>-->
-<!--                    </dependency>-->
+                    <!--                    <dependency>-->
+                    <!--                        <groupId>mysql</groupId>-->
+                    <!--                        <artifactId>mysql-connector-java</artifactId>-->
+                    <!--                        <version>5.1.47</version>-->
+                    <!--                    </dependency>-->
                     <dependency>
                         <groupId>org.mybatis.generator</groupId>
                         <artifactId>mybatis-generator-core</artifactId>
