@@ -52,7 +52,7 @@ public class ProfileController {
             List<QuestionDTO> questionList = new ArrayList<QuestionDTO>();
             questionList = questionService.findQuestionByCreator(offset, pageSize, user.getId());
             // 获取用于分页的信息
-            PageInfoDTO pageInfoDTO = questionService.getPageInfo(currPage, totalPage);
+            PageInfoDTO pageInfoDTO = new PageInfoDTO(currPage, totalPage);
             // 将数据添加到Model中去（用于前端使用）
             model.addAttribute("section", action);
             model.addAttribute("questions", questionList);

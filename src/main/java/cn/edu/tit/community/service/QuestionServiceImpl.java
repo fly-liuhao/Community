@@ -3,10 +3,12 @@ package cn.edu.tit.community.service;
 import cn.edu.tit.community.dto.CommentDTO;
 import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
+import cn.edu.tit.community.dto.SearchQuestionDTO;
 import cn.edu.tit.community.enums.CustomizeErrorCodeEnum;
 import cn.edu.tit.community.exception.CustomizeException;
 import cn.edu.tit.community.mapper.QuestionExtMapper;
 import cn.edu.tit.community.mapper.QuestionMapper;
+import cn.edu.tit.community.mapper.UserMapper;
 import cn.edu.tit.community.model.Question;
 import cn.edu.tit.community.model.QuestionExample;
 import cn.edu.tit.community.model.User;
@@ -31,21 +33,9 @@ public class QuestionServiceImpl implements QuestionService {
     QuestionExtMapper questionExtMapper;
 
     @Autowired
-    UserService userService;
+    UserMapper userMapper;
 
-    @Override
-    public boolean addQuestion(Question question) {
-        int mysql_affected_rows = questionMapper.insert(question);
-        boolean result = mysql_affected_rows != 0 ? true : false;
-        return result;
-    }
 
-    @Override
-    public int findQuestionCount() {
-        QuestionExample questionExample = new QuestionExample();
-        questionExample.createCriteria();
-        return (int) questionMapper.countByExample(questionExample);
-    }
 
     @Override
     public int findQuestionCountByCreator(int creator) {
@@ -54,26 +44,6 @@ public class QuestionServiceImpl implements QuestionService {
         return (int) questionMapper.countByExample(questionExample);
     }
 
-    @Override
-    public List<QuestionDTO> findQuestion(int offset, int pageSize) {
-
-        // 获取分页后的问题集合
-        QuestionExample example = new QuestionExample();
-        example.setOrderByClause("gmt_create desc");
-        example.createCriteria();
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, pageSize));
-        // 用于传输时的问题集合（补充了创建问题的用户信息）
-        List<QuestionDTO> questionDtoList = new ArrayList<QuestionDTO>();
-        for (Question question : questionList) {
-            QuestionDTO questionDTO = new QuestionDTO();
-            // 将两个对象中相同字段的属性值自动拷贝到另一个实体对象中去
-            BeanUtils.copyProperties(question, questionDTO);
-            User user = userService.findUserById(question.getCreator());
-            questionDTO.setUser(user);
-            questionDtoList.add(questionDTO);
-        }
-        return questionDtoList;
-    }
 
     @Override
     public List<QuestionDTO> findQuestionByCreator(int offset, Integer pageSize, int creator) {
@@ -88,7 +58,7 @@ public class QuestionServiceImpl implements QuestionService {
             QuestionDTO questionDTO = new QuestionDTO();
             // 将两个对象中相同字段的属性值自动拷贝到另一个实体对象中去
             BeanUtils.copyProperties(question, questionDTO);
-            User user = userService.findUserById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
             questionDtoList.add(questionDTO);
         }
@@ -97,37 +67,25 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public int findQuestionCountByTitle(String keyword) {
-        // 获取分页后的问题集合
-        QuestionExample example = new QuestionExample();
-        example.setOrderByClause("gmt_modify desc");
-        example.createCriteria().andTitleLike("%" + keyword + "%");
-        return (int) questionMapper.countByExample(example);
+        String regexpKeyword = keyword.trim().replaceAll(" +", "|");
+        return  questionExtMapper.selectQuestionCountByTitle(regexpKeyword);
     }
 
     @Override
-    public List<QuestionDTO> findQuestionByTitle(int offset, Integer pageSize, String keyword) {
+    public List<QuestionDTO> findQuestionByTitle(SearchQuestionDTO searchQuestionDTO) {
         // 获取分页后的问题集合
-        QuestionExample example = new QuestionExample();
-        example.setOrderByClause("gmt_modify desc");
-        example.createCriteria().andTitleLike("%" + keyword + "%");
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, pageSize));
+        List<Question> questionList = questionExtMapper.selectQuestionByTitle(searchQuestionDTO);
         // 用于传输时的问题集合（补充了创建问题的用户信息）
         List<QuestionDTO> questionDtoList = new ArrayList<QuestionDTO>();
         for (Question question : questionList) {
             QuestionDTO questionDTO = new QuestionDTO();
             // 将两个对象中相同字段的属性值自动拷贝到另一个实体对象中去
             BeanUtils.copyProperties(question, questionDTO);
-            User user = userService.findUserById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
             questionDtoList.add(questionDTO);
         }
         return questionDtoList;
-    }
-
-    @Override
-    public PageInfoDTO getPageInfo(int currPage, int pageSize) {
-        PageInfoDTO pageInfoDTO = new PageInfoDTO(currPage, pageSize);
-        return pageInfoDTO;
     }
 
     @Override
@@ -139,7 +97,7 @@ public class QuestionServiceImpl implements QuestionService {
         }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        User user = userService.findUserById(question.getCreator());
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }

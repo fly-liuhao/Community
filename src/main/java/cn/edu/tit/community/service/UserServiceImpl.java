@@ -18,13 +18,6 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public boolean addUser(User user) {
-        int mysql_affected_rows = userMapper.insert(user);
-        boolean result = mysql_affected_rows != 0 ? true : false;
-        return result;
-    }
-
-    @Override
     public User findUserByToken(String token) {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andTokenEqualTo(token);

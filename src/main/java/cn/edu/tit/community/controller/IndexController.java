@@ -2,6 +2,7 @@ package cn.edu.tit.community.controller;
 
 import cn.edu.tit.community.dto.PageInfoDTO;
 import cn.edu.tit.community.dto.QuestionDTO;
+import cn.edu.tit.community.dto.SearchQuestionDTO;
 import cn.edu.tit.community.service.NotificationService;
 import cn.edu.tit.community.service.QuestionService;
 import cn.edu.tit.community.service.UserService;
@@ -35,37 +36,9 @@ public class IndexController {
      */
     @GetMapping("/")
     public String index(Model model,
+                        @RequestParam(name = "keyword", defaultValue = "") String keyword,
                         @RequestParam(name = "currPage", defaultValue = "1") Integer currPage,
-                        @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-
-        // 处理分页数据
-        int totalCount = questionService.findQuestionCount();
-        int totalPage = (totalCount % pageSize == 0) ? totalCount / pageSize : totalCount / pageSize + 1;
-        if (currPage < 1) {
-            currPage = 1;
-        }
-        if (currPage > totalPage && totalPage != 0) {
-            currPage = totalPage;
-        }
-        int offset = pageSize * (currPage - 1);
-
-        // 查询当前页的问题
-        List<QuestionDTO> questionList = questionService.findQuestion(offset, pageSize);
-        // 获取用于分页的信息
-        PageInfoDTO pageInfoDTO = questionService.getPageInfo(currPage, totalPage);
-        // 将数据添加到Model中去（用于前端使用）
-        model.addAttribute("questions", questionList);
-        model.addAttribute("pageInfo", pageInfoDTO);
-
-        return "index";
-    }
-
-
-    @PostMapping("/search")
-    public String search(Model model,
-                         @RequestParam(name = "keyword") String keyword,
-                         @RequestParam(name = "currPage", defaultValue = "1") Integer currPage,
-                         @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+                        @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize) {
 
         // 处理分页数据
         int totalCount = questionService.findQuestionCountByTitle(keyword);
@@ -79,12 +52,14 @@ public class IndexController {
         int offset = pageSize * (currPage - 1);
 
         // 查询当前页的问题
-        List<QuestionDTO> questionList = questionService.findQuestionByTitle(offset, pageSize, keyword);
+        SearchQuestionDTO searchQuestionDTO = new SearchQuestionDTO(offset, pageSize, keyword);
+        List<QuestionDTO> questionList = questionService.findQuestionByTitle(searchQuestionDTO);
         // 获取用于分页的信息
-        PageInfoDTO pageInfoDTO = questionService.getPageInfo(currPage, totalPage);
+        PageInfoDTO pageInfoDTO = new PageInfoDTO(currPage, totalPage);
         // 将数据添加到Model中去（用于前端使用）
         model.addAttribute("questions", questionList);
         model.addAttribute("pageInfo", pageInfoDTO);
+        model.addAttribute("keyword", keyword);
 
         return "index";
     }
