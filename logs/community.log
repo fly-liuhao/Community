@@ -1,0 +1,11 @@
+2020-01-05 21:21:07.614  INFO 21748 --- [restartedMain] c.e.tit.community.CommunityApplication   : Starting CommunityApplication on Fly with PID 21748 (started by liuhao in D:\文档\IDEA\Project\community)
+2020-01-05 21:21:07.614  INFO 21748 --- [restartedMain] c.e.tit.community.CommunityApplication   : No active profile set, falling back to default profiles: default
+2020-01-05 21:21:08.415  WARN 21748 --- [restartedMain] org.apache.tomcat.util.modeler.Registry  : The MBean registry cannot be disabled because it has already been initialised
+2020-01-05 21:21:08.480  INFO 21748 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-01-05 21:21:08.481  INFO 21748 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-01-05 21:21:08.482  INFO 21748 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.27]
+2020-01-05 21:21:08.545  INFO 21748 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2020-01-05 21:21:08.546  INFO 21748 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 927 ms
+2020-01-05 21:21:08.581  INFO 21748 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2020-01-05 21:21:08.592  INFO 21748 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2020-01-05 21:21:08.593  INFO 21748 --- [restartedMain] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:~/community'
