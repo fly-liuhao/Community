@@ -33,6 +33,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public boolean addNotification(Notification notification) {
+        if (notification.getNotifier().equals(notification.getReceiver())) {
+            return true;
+        }
         int insertResult = notificationMapper.insert(notification);
         return insertResult != 0 ? true : false;
     }

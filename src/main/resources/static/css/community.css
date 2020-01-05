@@ -1,6 +1,6 @@
 body {
     margin: 30px 180px;
-    /*background-image: url("/img/bg.png");*/
+    /*background-image: url("/images/bg.png");*/
     /*background-repeat: repeat repeat;*/
     /*background-size: 5%;*/
     background-color: #dce8e8;
@@ -138,6 +138,10 @@ body {
 
 .comment-list .comment-second-level-btn {
     margin-top: 10px;
+}
+
+.comment-curr-user {
+    margin-bottom: 15px;
 }
 
 .advertising {

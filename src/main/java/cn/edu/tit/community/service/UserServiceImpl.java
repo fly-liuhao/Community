@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
             updateUser.setAvatarUrl(user.getAvatarUrl());// 用户头像
             updateUser.setGmtModify(System.currentTimeMillis());// 记录修改时间
             UserExample example = new UserExample();
-            userExample.createCriteria()
+            example.createCriteria()
                     .andIdEqualTo(dbUser.getId());
             userMapper.updateByExampleSelective(updateUser, example);
         }

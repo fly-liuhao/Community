@@ -133,15 +133,15 @@
             <!-- 用户回复区域 -->
             <div id="comment_area" class="col-md-12 col-md-12 col-sm-12 col-xs-12 comment-margin-top">
                 <!--用户信息-->
-                <div class="media">
+                <div class="media comment-curr-user">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object img-rounded" th:src="${question.user.avatarUrl}">
+                            <img class="media-object img-rounded" th:src="${session.user!=null?session.user.avatarUrl:'/images/avatar-default.png'}">
                         </a>
                     </div>
                     <div class="media-body" style="padding-top: 12px">
                         <h5 class="media-heading">
-                            <span th:text="${question.user.name}"></span>
+                            <span th:text="${session.user!=null?session.user.name:'匿名用户'}"></span>
                         </h5>
                     </div>
                 </div>
@@ -196,7 +196,7 @@
                     </div>
                 </div>
                 <div class="advertising">
-                    <img src="/img/WeChat.jpg" alt="WeChat.jpg" class="img-thumbnail advertising-img">
+                    <img src="/images/WeChat.jpg" alt="WeChat.jpg" class="img-thumbnail advertising-img">
                 </div>
                 <div class="mod-head">
                     <h4>相关问题</h4>

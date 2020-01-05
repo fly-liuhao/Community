@@ -66,7 +66,7 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUserDTO.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModify(user.getGmtCreate());
-            user.setBio(githubUserDTO.getBio());
+            user.setBio(githubUserDTO.getBio() != null ? githubUserDTO.getBio() : "");
             user.setAvatarUrl(githubUserDTO.getAvatarUrl());
 
             // 数据库添加用户或者更新用户信息
