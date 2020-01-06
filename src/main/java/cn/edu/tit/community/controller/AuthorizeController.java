@@ -5,6 +5,7 @@ import cn.edu.tit.community.dto.GithubUserDTO;
 import cn.edu.tit.community.model.User;
 import cn.edu.tit.community.provider.GithubProvider;
 import cn.edu.tit.community.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.UUID;
  * 授权登录：接收callback, 做access token
  */
 
+@Slf4j
 @Controller
 public class AuthorizeController {
 
@@ -48,13 +50,13 @@ public class AuthorizeController {
         String accessToken = null;
         for (int i = 0; i < 10 && accessToken == null; i++) {
             accessToken = githubProvider.getAccessToken(accessTokenDTO);
-            System.out.println("*-" + i);
+            log.info("获取accessToken no.{}" + i);
         }
         GithubUserDTO githubUserDTO = null;
         if (accessToken != null) {
             for (int i = 0; i < 10 && githubUserDTO == null; i++) {
                 githubUserDTO = githubProvider.getGithubUserInfo(accessToken);
-                System.out.println("#-" + i);
+                log.info("获取githubUserDTO no.{}" + i);
             }
         }
         if (githubUserDTO != null) {
@@ -78,9 +80,7 @@ public class AuthorizeController {
             response.addCookie(cookie);
 
         } else {
-            System.out.println("accessToken: " + accessToken);
-            System.out.println("githubUserDTO: " + githubUserDTO);
-            System.out.println("登录失败！");
+            log.error("callback get github userInfo error,{}", githubUserDTO);
         }
 
         return "redirect:/";

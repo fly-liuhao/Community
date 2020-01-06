@@ -18,10 +18,6 @@ logs/
 .idea
 *.iws
 *.iml
-
-
-
-
 *.ipr
 
 ### NetBeans ###

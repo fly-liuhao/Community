@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createOrUpdateUser(User user) {
+        // 现根据传入用户的账户ID查询数据库中的用户集合
         UserExample userExample = new UserExample();
         userExample.createCriteria().andAccountIdEqualTo(user.getAccountId());
         List<User> dbUsers = userMapper.selectByExample(userExample);

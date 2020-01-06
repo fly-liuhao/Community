@@ -9,12 +9,14 @@ import cn.ucloud.ufile.auth.UfileObjectLocalAuthorization;
 import cn.ucloud.ufile.bean.PutObjectResultBean;
 import cn.ucloud.ufile.exception.UfileClientException;
 import cn.ucloud.ufile.exception.UfileServerException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class UCloudProvider {
 
@@ -70,7 +72,6 @@ public class UCloudProvider {
                     .nameAs(generatedFileName)
                     .toBucket(bucketName)
                     .setOnProgressListener((bytesWritten, contentLength) -> {
-
                     })
                     .execute();
             if (response != null && response.getRetCode() == 0) {
@@ -79,13 +80,14 @@ public class UCloudProvider {
                         .createUrl();
                 return fileURL;
             } else {
+                log.error("upload error,{}", response);
                 throw new CustomizeException(CustomizeErrorCodeEnum.FILE_UPLOAD_FAIL);
             }
         } catch (UfileClientException e) {
-            e.printStackTrace();
+            log.error("upload error,{}", fileName, e);
             throw new CustomizeException(CustomizeErrorCodeEnum.FILE_UPLOAD_FAIL);
         } catch (UfileServerException e) {
-            e.printStackTrace();
+            log.error("upload error,{}", fileName, e);
             throw new CustomizeException(CustomizeErrorCodeEnum.FILE_UPLOAD_FAIL);
         }
     }

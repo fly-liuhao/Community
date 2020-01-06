@@ -5,11 +5,13 @@ import cn.edu.tit.community.dto.AccessTokenDTO;
 import cn.edu.tit.community.dto.GithubUserDTO;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class GithubProvider {
 
@@ -33,7 +35,7 @@ public class GithubProvider {
             String access_token = responseStr.split("&")[0].split("=")[1];
             return access_token;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("get Access token error,{}", accessTokenDTO, e);
         }
         return null;
     }
@@ -56,7 +58,7 @@ public class GithubProvider {
             GithubUserDTO githubUserDTO = JSON.parseObject(responseStr, GithubUserDTO.class);
             return githubUserDTO;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("get github userInfo error,{}", accessToken, e);
         }
         return null;
     }

@@ -4,6 +4,7 @@ import cn.edu.tit.community.dto.ResponseDTO;
 import cn.edu.tit.community.enums.CustomizeErrorCodeEnum;
 import cn.edu.tit.community.exception.CustomizeException;
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@Slf4j
 @ControllerAdvice
 public class CustomizeExceptionHandler {
 
@@ -27,6 +29,7 @@ public class CustomizeExceptionHandler {
                 // 如果是自定义的异常
                 responseDTO = ResponseDTO.errorOf((CustomizeException) e);
             } else {
+                log.error("handle error", e);
                 // 不是自定义的异常，返回一个自定义的服务器端异常
                 responseDTO = ResponseDTO.errorOf(new CustomizeException(CustomizeErrorCodeEnum.SYS_ERROR));
             }
@@ -38,6 +41,7 @@ public class CustomizeExceptionHandler {
                 writer.write(JSON.toJSONString(responseDTO));
                 writer.close();
             } catch (IOException ex) {
+                log.error("handle error", e);
                 ex.printStackTrace();
             }
             return null;
@@ -56,6 +60,7 @@ public class CustomizeExceptionHandler {
 
     /**
      * 获取请求的状态码
+     *
      * @param request 用户请求
      * @return 状态码
      */

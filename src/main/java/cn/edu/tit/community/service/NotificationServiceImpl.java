@@ -33,6 +33,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public boolean addNotification(Notification notification) {
+        // 如果评论者和接收者一直，则不需通知
         if (notification.getNotifier().equals(notification.getReceiver())) {
             return true;
         }
@@ -117,6 +118,13 @@ public class NotificationServiceImpl implements NotificationService {
         }
     }
 
+    /**
+     * 根据ID和评论类型获取问题标题或者评论内容
+     *
+     * @param otherId 评论或者问题ID
+     * @param type    评论类型
+     * @return 问题标题或者评论内容
+     */
     public String getTitle(int otherId, int type) {
         String title = "";
         if (type == NotificationTypeEnum.REPLY_COMMENT.getType()) {
