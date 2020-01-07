@@ -12,6 +12,7 @@ import cn.edu.tit.community.mapper.UserMapper;
 import cn.edu.tit.community.model.Question;
 import cn.edu.tit.community.model.QuestionExample;
 import cn.edu.tit.community.model.User;
+import cn.edu.tit.community.util.TimeFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
@@ -60,6 +61,7 @@ public class QuestionServiceImpl implements QuestionService {
             BeanUtils.copyProperties(question, questionDTO);
             User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
+            questionDTO.setPubtime(TimeFormat.timeFormat(question.getGmtCreate()));
             questionDtoList.add(questionDTO);
         }
         return questionDtoList;
@@ -83,6 +85,7 @@ public class QuestionServiceImpl implements QuestionService {
             BeanUtils.copyProperties(question, questionDTO);
             User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
+            questionDTO.setPubtime(TimeFormat.timeFormat(question.getGmtCreate()));
             questionDtoList.add(questionDTO);
         }
         return questionDtoList;

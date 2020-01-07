@@ -15,5 +15,6 @@ public class QuestionDTO {
     private Long gmtCreate;
     private Long gmtModify;
     private int creator;
-    User user;
+    private User user;
+    private String pubtime;
 }

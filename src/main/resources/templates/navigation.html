@@ -7,7 +7,7 @@
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header" style="position: relative; bottom: 10px;">
                 <a class="navbar-brand" href="/">
-                    <img src="/images/logo.png" width="120" height="41" alt="logo.jpg">
+                    <img src="/images/logo.png" width="120" height="41" alt="logo.png">
                 </a>
                 <!--<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> fly社区123</a>-->
             </div>
@@ -42,8 +42,22 @@
                         </ul>
                     </li>
                     <li th:unless="${session.user != null}">
-                        <a href="https://github.com/login/oauth/authorize?client_id=78111a4363ecd4d6b210&redirect_uri=http://localhost:8080/callback&scope=user&state=randomString">登录</a>
+<!--                        <a href="https://github.com/login/oauth/authorize?client_id=78111a4363ecd4d6b210&redirect_uri=http://localhost:8080/callback&scope=user&state=randomString">登录</a>-->
+<!--                        <a th:href="@{https://github.com/login/oauth/authorize(client_id='78111a4363ecd4d6b210',redirect_uri=${#httpServletRequest.getServletContext().getAttribute('redirectUri')},scope='user',state=1)}">登录</a>-->
+                        <a th:href="@{https://github.com/login/oauth/authorize(client_id='78111a4363ecd4d6b210',redirect_uri=${#httpServletRequest.getRequestURL()+'callback'},scope='user',state=1)}">登录</a>
                     </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+
+</html>
+
+</li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

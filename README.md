@@ -3,6 +3,24 @@
 #### 作者
 - 刘浩
 
+#### 部署
+2. 安装Git
+3. 安装JDK
+4. 安装Maven
+5. 安装MySQl
+
+``` script
+Linux 简单命令
+# ctrl + l / [cLear] - 清屏。
+# ctrl + c - 终止命令。
+# ctrl + a - 光标移到行首 。
+# ctrl + e - 光标移到行尾。
+# ctrl + u - 清除光标到行首的字符 。
+# ctrl + w - 清除光标之前一个单词 。
+# ctrl + k - 清除光标到行尾的字符。
+# ctrl + y - 粘贴前一ctrl+u类命令删除的字符。
+```
+
 #### 相似网站
 - [码匠社区](http://www.mawen.co/)
 - [elastic中文社区](https://elasticsearch.cn/)
@@ -32,8 +50,6 @@
 - [Markdown编辑器插件](https://pandao.github.io/editor.md/index.html)：用于使用Markdown文本框发布、评论问题
 - [UCloud官网-UFile对象存储-说明文档](https://docs.ucloud.cn/storage_cdn/ufile/introduction/concept)：类似于阿里云、腾讯云、华为云的云计算提供商
 - [UCloud-UFile对象存储-github-SDK](https://github.com/ucloud/ufile-sdk-java)：用于文件的上传下载
-
-
 
 #### 工具
 - [Git](https://git-scm.com/)

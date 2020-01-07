@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>基于微服务架构的信息分享社区的设计与实现</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/bootstrap-theme.css"/>
-    <link rel="stylesheet" href="css/community.css"/>
-    <script src="js/jquery-3.4.1.min.js" type="application/javascript"></script>
-    <script src="js/bootstrap.js" type="application/javascript"></script>
-    <script src="js/community.js"></script>
-
+    <title>Fly社区</title>
+    <head th:insert="~{import :: head}"></head>
 </head>
 <body onload="isClose()">
 <div th:replace="navigation :: nav"></div>
@@ -32,7 +25,7 @@
                         <span th:text="${question.commentCount}"></span> 个回复 •
                         <span th:text="${question.viewCount}"></span> 次浏览 •
                         <span th:text="${question.likeCount}"></span> 个喜欢 •
-                        <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd  HH:mm ')}"></span>
+                        <span th:text="${question.pubtime}"></span>
                     </span>
                 </div>
                 <hr th:unless="${question.equals(questions.get(questions.size()-1))}">
@@ -48,26 +41,31 @@
 
                     <!--上一页-->
                     <li th:if="${pageInfo.getShowPrevPage()}">
-                        <a th:href="@{/(currPage=${pageInfo.getCurrPage()-1},keyword=${keyword != null ? keyword:''})}" aria-label="Previous">
+                        <a th:href="@{/(currPage=${pageInfo.getCurrPage()-1},keyword=${keyword != null ? keyword:''})}"
+                           aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
 
                     <!--显示页-->
                     <li th:each="page : ${pageInfo.getPages()}" th:class="${pageInfo.currPage == page}? 'active' : ''">
-                        <a th:href="@{/(currPage=${page},keyword=${keyword != null ? keyword:''})}" th:text="${page}" aria-label="Pages"></a>
+                        <a th:href="@{/(currPage=${page},keyword=${keyword != null ? keyword:''})}" th:text="${page}"
+                           aria-label="Pages"></a>
                     </li>
 
                     <!--下一页-->
                     <li th:if="${pageInfo.getShowNextPage()}">
-                        <a href="#" th:href="@{/(currPage=${pageInfo.getCurrPage()+1},keyword=${keyword != null ? keyword:''})}" aria-label="Next">
+                        <a href="#"
+                           th:href="@{/(currPage=${pageInfo.getCurrPage()+1},keyword=${keyword != null ? keyword:''})}"
+                           aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
 
                     <!--尾页-->
                     <li th:if="${pageInfo.getShowEndPage()}">
-                        <a th:href="@{/(currPage=${pageInfo.getEndPage()},keyword=${keyword != null ? keyword:''})}" aria-label="End">
+                        <a th:href="@{/(currPage=${pageInfo.getEndPage()},keyword=${keyword != null ? keyword:''})}"
+                           aria-label="End">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
