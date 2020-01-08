@@ -60,10 +60,11 @@
         </dependency>
         <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <!-- MySQL数据库 -->
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.47</version>
+            <version>8.0.18</version>
         </dependency>
         <!-- MyBatis 持久层ORM框架-->
         <dependency>
@@ -127,15 +128,23 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>6.1.1</version>
                 <configuration>
-                    <url>jdbc:h2:~/community</url>
+<!--                    <url>jdbc:h2:~/community</url>-->
+                    <url>jdbc:mysql://119.3.162.93:3306/community</url>
                     <user>root</user>
                     <password>root</password>
                 </configuration>
                 <dependencies>
+                    <!-- H2驱动 -->
                     <dependency>
                         <groupId>com.h2database</groupId>
                         <artifactId>h2</artifactId>
                         <version>1.4.200</version>
+                    </dependency>
+                    <!-- MySQL驱动 -->
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>8.0.18</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -158,11 +167,11 @@
                         <version>1.4.200</version>
                     </dependency>
                     <!-- MySQL驱动 -->
-                    <!--                    <dependency>-->
-                    <!--                        <groupId>mysql</groupId>-->
-                    <!--                        <artifactId>mysql-connector-java</artifactId>-->
-                    <!--                        <version>5.1.47</version>-->
-                    <!--                    </dependency>-->
+<!--                    <dependency>-->
+<!--                        <groupId>mysql</groupId>-->
+<!--                        <artifactId>mysql-connector-java</artifactId>-->
+<!--                        <version>8.0.18</version>-->
+<!--                    </dependency>-->
                     <dependency>
                         <groupId>org.mybatis.generator</groupId>
                         <artifactId>mybatis-generator-core</artifactId>
